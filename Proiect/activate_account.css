@@ -1,0 +1,168 @@
+body{
+    background-color:#71926c;
+    position: relative;
+
+}
+.header{
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    border-radius: 25px;
+    
+}
+.header h2{
+  color: #71926C;
+}
+.main{
+    width: 300px;
+    display: flex;
+    justify-content: space-around; */
+}
+ 
+.main a {
+  text-decoration: none;
+}
+.main a:hover {
+  text-decoration: none;
+  color: #71926C;
+}
+
+.main nav {
+  font-family: serif;
+  font-weight: bold;
+}
+
+.main ul {
+ list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.main li {
+  color: rgb(39, 39, 39);
+ display: block;
+  float: left;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  
+}
+  
+.main li a {
+  color: rgb(55, 55, 55);
+}
+
+.main li:hover {
+   cursor: pointer;
+   color: #71926C;
+}
+
+.main ul li ul {
+   visibility: hidden;
+  opacity: 0;
+  min-width: 5rem;
+  position: absolute;
+   margin-top: 1rem;
+  left: 0;
+  display: none;
+}
+
+.main ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+  color: #71926C;
+  background-color: white;
+  border-bottom: 1px solid #71926C;
+}
+
+.main ul li ul li {
+  clear: both;
+  width: 100%;
+}
+.activate_account {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin-top: 20%;
+    margin-left: 50%;
+      top: 600%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 500px;
+      border: 3px solid#71926C;
+      background-color: white;
+    }
+    .activate_account img{
+        border-radius: 20px;
+            
+        left: -100%;
+        width: 500px;
+        height: 500px;
+      }
+      .account_activate{
+
+        margin-top: 25%;
+        margin-left:1%;
+        width: 200px;
+        height: 100px;
+      }
+      .act{
+         margin-top: 40%;
+    color: #71926C;
+  }
+      .account_activate input{
+        border: none;
+        border-bottom: 1px solid #71926C;
+        display: block;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .account_activate ::placeholder {
+        color: gray;
+        font-size: 1rem;
+      }
+      .account_activate input:focus {
+        border: none;
+      }
+      .account_activate button {
+        display: block;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 25px;
+        background-color: #71926C;
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: serif;
+        font-weight: bold;
+      }
+   
+      .footter {
+       display: flex;
+       justify-content: center;
+       font-weight: bold;
+       margin-left: 1%;
+        text-decoration: none;
+        color: #71926C;
+      }
+      .cal{
+        display: flex;
+        justify-content: center;
+        margin-top: 35%;
+        margin-left: -17%;
+         text-decoration: none;
+         color: #71926C;
+      }
+      /* .footer a {
+        text-decoration: none;
+        color: #71926C;
+      } */
