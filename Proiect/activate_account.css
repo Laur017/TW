@@ -83,13 +83,14 @@ ul li ul:hover {
   width: 100%;
 }
 .activate_account {
+ 
     display: flex;
     justify-content: space-between;
     border-radius: 25px;
     margin-top: 20%;
     margin-left: 50%;
-      top: 600%;
-      left: 100%;
+      top:400%;
+      left: 0%;
       transform: translate(-50%, -50%);
       width: 800px;
       height: 500px;
