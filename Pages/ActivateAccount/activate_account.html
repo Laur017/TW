@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Denumirea</title>
+  <link rel="icon" href="../../Assets/logo2.png" type="image/x-icon" />
+  <link rel="stylesheet" href="./activate_account.css" />
+  <script src="activate_account.js"></script>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="header nav" id="header">
+    <div class="navbar-wrapper">
+      <h2>Denumirea</h2>
+      <nav role="navigation" id="navigation">
+        <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
+          <i class="fa fa-bars"></i>
+        </a>
+        <ul id="links" class="navLinks">
+          <li><a href="#">Menu 1</a></li>
+          <li><a href="#">Menu 2</a></li>
+          <li><a href="#">Menu 3</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="activate_account">
+    <img src="../../Assets/activate_account.jpg" alt="activate_account_image" />
+    <div class="second_part">
+      <div class="act">Activate your account</div>
+      <form class="account_activate" action="/set_new_password" method="POST" onsubmit="onSubmit()">
+
+        <input type="text" placeholder="Mobile number or email" required
+          pattern="^([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3})|(\d{3}\d{3}\d{4})$" /><br />
+        <input type="text" placeholder="Activation code" required />
+        <button type="submit">Sign up</button>
+      </form>
+      <div class="cal">
+        You already have an account ?<a href="../Login/login.html" class="footter">Login here</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

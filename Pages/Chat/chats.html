@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chats.css">
+    <script src="chats.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>ChatApp</title>
+</head>
+
+<body>
+    <div class="header nav" id="header">
+        <div class="navbar-wrapper">
+            <h2>Denumirea</h2>
+            <nav role="navigation" id="navigation">
+                <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul id="links" class="navLinks">
+                    <li><a href="#">Menu 1</a></li>
+                    <li><a href="#">Menu 2</a></li>
+                    <li><a href="#">Menu 3</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="big-container">
+        <header class="chat-header">
+            <h1>OurName <sub>or</sub> OurLogo</h1>
+        </header>
+
+        <main class="chat-main">
+            <div class="chat-sidebar">
+                <!--SideBar-->
+                <h3>Recent</h3>
+                <!--here-->
+                <ul>
+                    <!--here-->
+                    <li><img src="../../Assets/ProfilePic.png"
+                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
+                        Ana
+                        <p id="rec-msg">Ceva mesaj recent</p>
+                    </li>
+
+                    <li><img src="../../Assets/ProfilePic.png"
+                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
+                        Dana
+                        <p id="rec-msg">Ceva mesaj recent</p>
+                    </li>
+                    <li><img src="../../Assets/ProfilePic.png"
+                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
+                        Nana
+                        <p id="rec-msg">Ceva mesaj recent mai lung sa vedem cum se redimensioneaza</p>
+                    </li>
+                    <li><img src="../../Assets/ProfilePic.png"
+                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
+                        Lana
+                        <p id="rec-msg">Ceva mesaj recent</p>
+                    </li>
+
+                    <li>
+                        <img src="../../Assets/ProfilePic.png"
+                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
+                        Pana
+                        <p id="rec-msg">Ceva mesaj recent</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat-window">
+                <div class="messages" id="tryid">
+                    <div class="mymessage">
+                        <!--here-->
+                        <p class="meta">Mr. Marley <span>9:23pm</span></p>
+                        <!--here-->
+                        <p class="text">
+                            The winds that sometimes take something we love, are the same that bring us something we
+                            learn to love.
+                            Therefore we should not cry about something that was taken from us, but, yes, love what we
+                            have been given.
+                            Because what is really ours is never gone forever.
+                        </p>
+                    </div>
+
+                    <div class="mymessage">
+                        <!--here-->
+                        <p class="meta">Mr. Marley <span>9:23pm</span></p>
+                        <!--here-->
+                        <p class="text">
+                            The winds that sometimes take something we love, are the same that bring us something we
+                            learn to love.
+                            Therefore we should not cry about something that was taken from us, but, yes, love what we
+                            have been given.
+                            Because what is really ours is never gone forever.
+                        </p>
+                    </div>
+                    <div class="hismessage">
+                        <!--here-->
+                        <p class="meta">Mr. Marley <span>9:23pm</span></p>
+                        <!--here-->
+                        <p class="text">
+                            The winds that sometimes take something we love, are the same that bring us something we
+                            learn to love.
+                            Therefore we should not cry about something that was taken from us, but, yes, love what we
+                            have been given.
+                            Because what is really ours is never gone forever.
+                        </p>
+                    </div>
+
+                    <div class="mymessage">
+                        <!--here-->
+                        <p class="meta">Mr. Marley <span>9:23pm</span></p>
+                        <!--here-->
+                        <p class="text">
+                            The winds that sometimes take something we love, are the same that bring us something we
+                            learn to love.
+                            Therefore we should not cry about something that was taken from us, but, yes, love what we
+                            have been given.
+                            Because what is really ours is never gone forever.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <form id="form">
+                        <input id="amess" type="text" placeholder="Type a message" required autocomplete="off" />
+                        <input type="image" src="../../Assets/NobordrrDeloc.png" width="30px" alt="Submit Form" />
+
+                    </form>
+                    <script>
+
+                        function MyGetDate() {
+                            var today = new Date();
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                            var yyyy = today.getFullYear();
+                            today = mm + '/' + dd + '/' + yyyy;
+                            return (today);
+                        }
+
+                        function MyGetTime() {
+                            var today = new Date();
+                            var time = today.getHours() + ":" + today.getMinutes(); // + ":" + today.getSeconds();
+                            return time;
+                        }
+
+
+                        var socket = io();
+                        var userID = Math.random() * 1000; console.log(userID);
+                        userID = userID.toPrecision(3); console.log(userID);
+                        var messages = document.getElementById('tryid');
+
+                        var form = document.getElementById('form');
+                        var input = document.getElementById('amess');
+
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            if (input.value) {
+                                socket.emit('chat message', input.value);
+                                input.value = '';
+                            }
+                        });
+
+                        socket.on('chat message', function (msg) {
+                            var item = document.createElement('div');
+                            item.classList.add("mymessage");
+
+                            var textSender = document.createElement('p');
+                            textSender.classList.add("meta");
+                            textSender.textContent = "USER" + userID;
+                            item.appendChild(textSender)
+
+                            var MsgDateString = document.createElement('span');
+                            MsgDateString.textContent = " " + MyGetTime();
+
+                            textSender.append(MsgDateString);
+
+
+                            messages.appendChild(item);
+
+                            var actualMsg = document.createElement('p');
+                            item.appendChild(actualMsg);
+                            actualMsg.textContent = msg;
+
+                            window.scrollTo(0, Number.MAX_VALUE);
+
+                        });
+                    </script>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+</body>
+
+</html>
