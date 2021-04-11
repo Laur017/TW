@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="scholarly.css">
+    <title>Scholarly HTML</title>
+</head>
+
+<body>
+    <img src="scholarly-html.svg" width="227" height="50" alt="Scholarly HTML logo">
+    <div style="margin: 30px auto auto 8%;" role="contentinfo">
+        <h2>Autori</h2>
+        <ul>
+            <li>Manole Andrei-Cosmin</li>
+            <li>Munteanu Maria</li>
+            <li>Popa Laurentiu</li>
+    </div>
+    <div style="margin: 30px auto auto 8%;">
+        <h2>Cuprins</h2>
+        <ul>
+            <li> <a href="#introduction">Introducere </a> </li>
+            <li> <a href="#structure"> Structura </a></li>
+        </ul>
+
+        <section id="purpose">
+            <h2>Scop</h2>
+
+            Scopul acstui document SRS este de a descrie functionalitatea esentiala a
+            aplicatiei Realtime Support Chat si detalii privind aspectul si interactiunea cu utilizatorul.
+
+        </section>
+
+        <section id="introduction">
+            <h2>Introducere</h2>
+            <p>
+                Realtime Suport Chat este o solutie web prin care administratorii unei aplicatii pot sa comunice in timp
+                real
+                (1 la 1 sau 1 la N) cu utilizatorii. Acest proiect are scopul de a fi folosit de catre companii in
+                comunicarea
+                acestora cu clientii, oferind un mediu de utilizare simplu si familiar majoritatii oamenilor.
+
+            </p>
+
+            <h3> Principale noastre obiective </h3>
+            <ul>
+                <li>Incurajarea apelarii la suportul oferit de persoanele specializate in mediul online</li>
+                <li>crearea unei aplicații ușor de utilizat de către utilizatorul comun
+                    deoarece majoritatea oamenilor consideră prea complicat sau ineficient procesul standard de
+                    "customer support"</li>
+            </ul>
+
+            <h3> Referinte </h3>
+            <p>Acest proiect are ca inspiratie platforma "Drift" despre care puteti afla mai multe accesand urmatorul
+                link: <a href="https://www.drift.com/" target="_blank"> Drift.com </a></p>
+
+        </section>
+        <section id="structure">
+            <h2>Structura</h2>
+            <p>
+                Am dezvoltat trei componente principale: paginile web front-end, serverul back-end pentru a ilustra
+                functionalitatea aplicatiei si un script JS ce creaza o fereastra de chat si care poate fi integrat
+                intr-un site web. <br>
+                De asemenea, am folosit Node.js ca platforma pentru back-end.
+
+            </p>
+
+            <p>
+            <h3>Front-end</h3>
+            Fiecare pagina web imparte un design comun cu celelalte. <br />
+            Paginile au un design responsive, ce permite vizualizarea pe orice device.
+            In continuare vom prezenta functionalitatea fiecarei pagini.
+            <br> <br>
+            <p style="color: blueviolet; font-size: 18px"> Pagini responsabile de gestionarea contului </p>
+            Dupa cumpararea unei licente pentru utilizarea acestei aplicatii, administratorul va primi pe mail un cod de
+            activare a contului. In functie de licenta pe care o detine, va putea genera un anumit numar de coduri unice
+            ce vor permite inregistrarea angajatilor in aplicatie. Astfel, aplicatia nu va putea fi utilizata decat dupa
+            primirea codului unic de activare.
+
+            <h4>Login</h4>
+            Pagina de login are un design simplu, foloseste un formular care primeste ca input
+            doua campuri: Email / Numarul de telefon si parola. De asemenea, datele introduse de utilizator
+            sunt verificate pentru respectarea structurii corespunzatoare pentru a il avertiza in cazul unei
+            erori de scriere.
+            De asemenea, pagina de login contine si doua linkuri, unul care redirectioneaza utilizatorul catre pagina de
+            inregistrare si respectiv catre pagina de resetare a parolei.
+            <p>
+                <img class="SS" src="Login.png" alt="LoginScreenShot">
+
+
+
+            </p>
+            <h4>Activate account</h4>
+            <p>
+                Pagina de activare a contului are un formular similar cu cel de la pagina de login. Dupa completarea cu
+                date corecte a formularului si apasarea butonului "Sign up", utilizatorul este redirectionat catre
+                pagina de setare a parolei.
+                <img class="SS" src="NewAccount.PNG" alt="Register ScreenShot">
+                </br>
+            </p>
+
+
+
+            </p>
+            <h4>Set new password</h4>
+            <p>
+
+                <img class="SS" src="NewPass.png" alt="New Password ScreenShot">
+
+            </p>
+            <p>
+                <b style="color: blueviolet;"> Pagina aplicatiei de chat </b>
+
+                continua designul simplu de utilizat pentru utilizator.
+                Pagina este compusa din 3 mari sectiuni: mesaje recente, fereastra actuala de chat si formularul
+                destinat scrierii mesajelor.
+            </p>
+
+
+            <img class="SS" src="Chat.png" alt="Chat ScreenShot" style="width: 50%;">
+            <h4>Bara de navigatie</h4>
+            <img class="SS" src="Navi.png" alt="Navi ScreenShot" style="width: 50%;"> <br>
+            Bara de navigatie va permite navigarea intre pagini. Aceasta contine un logo si mai multe linkuri pentru a
+            facilita
+            utilizarea aplicatiei web.
+            <p>
+            <h3>Script-ul pentru fereastra de chat</h3>
+            Scriptul este unul JS.</br>
+            Scriptul este incarcat intr-un site web si creaza o fereastra de chat de tip pop-up.</br>
+            Prin intermediul acestei ferestre de chat, utilizatorii pot comunica cu administratorii aplicatiei.
+            </p>
+
+            <p>
+            <h3>Back-end</h3>
+            Paginile web sunt organizate in foldere separate, fiecare avand asset-urile necesare functionarii sale,
+            astfel in momentul in care vom avea de facut
+            modificari sau actualizari unei singure pagini, vom apela la modulul aferent ei.</br>
+            Ca limbaj de programare, folosim JavaScript impreuna cu Node.js pentru partea de server.</br>
+
+            <h4>REST API
+            </h4>
+            <p>
+                Administatorii aplicatiei vor avea de asemenea la dispozitie un REST API integrabil in propriile sisteme
+                de tip CRM. <br>
+                Prin intermediul API-ului, acestia vor putea sa configureze aspectul ferestrei de chat create de catre
+                scriptul extern JS si vor putea seta mesaje automate.
+            </p>
+            </p>
+
+
+        </section>
+        </section>
+    </div>
+</body>
+
+</html>

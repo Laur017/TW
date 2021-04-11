@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	background: whitesmoke;
+	margin: 20px;
+}
+
+ul {
+	list-style: none;
+}
+
+h2, h3, h4 {
+
+	color: blueviolet;
+}
+
+a:link {
+	color: blue;
+  }
+  
+  /* visited link */
+  a:visited {
+	color: blue;
+  }
+  
+  /* mouse over link */
+  a:hover {
+	color: blueviolet;
+  }
+  
+  /* selected link */
+  a:active {
+	color: blue;
+  }
+
+  .SS {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 30%;
+	  
+  }
