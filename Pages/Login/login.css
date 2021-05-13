@@ -1,19 +1,8 @@
 body{
-    background-color:#71926c;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-}
-.header{
-    background-color: white;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 50px;
-  padding-right: 50px;
-  align-content: center;
-  border-radius: 25px;
-    
 }
 
 .container{
@@ -23,37 +12,13 @@ body{
   justify-content: center;
 }
 
-.header h2{
-  color: #71926C;
-}
-
- 
-.header a {
-  text-decoration: none;
-}
 .header a:hover {
-  text-decoration: none;
   color: #71926C;
 }
 
-.header nav {
-  font-family: serif;
-  font-weight: bold;
-}
-
-.header ul {
- list-style: none;
-  margin: 0;
-  padding-left: 0;
-}
 
 .header li {
-  color: rgb(39, 39, 39);
- display: block;
-  float: left;
-  padding: 1rem;
-  position: relative;
-  text-decoration: none;
+  color: rgb(39, 39, 39) ;
   
 }
   
@@ -62,34 +27,15 @@ body{
 }
 
 .header li:hover {
-   cursor: pointer;
    color: #71926C;
-}
-
-.header ul li ul {
-   visibility: hidden;
-  opacity: 0;
-  min-width: 5rem;
-  position: absolute;
-   margin-top: 1rem;
-  left: 0;
-  display: none;
 }
 
 .header ul li:hover > ul,
 ul li ul:hover {
-  visibility: visible;
-  opacity: 1;
-  display: block;
   color: #71926C;
-  background-color: white;
-  border-bottom: 1px solid #71926C;
 }
 
-.header ul li ul li {
-  clear: both;
-  width: 100%;
-}
+
 
 .login {
   width: 50%;
@@ -148,51 +94,3 @@ ul li ul:hover {
   color: #71926C;
 }
 
-nav>a {
-  display: none;
-}
-
-.navbar-wrapper {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-  clear: both;
-  overflow: hidden;
-}
-
-.navLinks{
-  display: flex;
-  flex-direction: row;
-}
-
-@media (max-width: 777px) {
-  .nav-minimized{
-    display: flex;
-    flex-direction: column;
-  }
-  .nav ul {
-    display: none;
-  }
-  
-  .navLinks>li{
-    display: flex;
-    justify-content: center;
-  }
-
-  nav {
-  position: relative;
-  display: inline-block;
-}
-
-.nav-minimized>ul {
-  display: flex;
-  flex-direction: column;
-}
-  
-  nav>a {
-    display: block;
-  }
-
-}
