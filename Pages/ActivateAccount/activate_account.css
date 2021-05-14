@@ -115,3 +115,8 @@ ul li ul:hover {
         text-decoration: none;
         color: #71926C;
       } */
+@media (max-width: 777px) {
+       .activate_account > img {
+    display: none;
+  }
+}
