@@ -1,4 +1,5 @@
 const Message = require("../models/messageModel");
+const User = require("../models/userModel");
 
 const { getPostData } = require("../utils");
 
@@ -14,16 +15,49 @@ async function getMessages(req, res) {
   }
 }
 
-async function getMessage(req, res, id) {
+async function getForUser(req, res, email) {
   try {
-    const mess = await Message.getById(id);
+    const user = await User.get(email)
 
-    if (!mess) {
+
+    if (!user) {
       res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Message not found" }));
+      res.end(JSON.stringify({ message: "User not found" }));
     } else {
+
+      const messages = await Message.getForUser(user.id)
+      if (!messages){
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Messages not found" }));
+      }
+
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(mess));
+      res.end(JSON.stringify(messages));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getConversation(req, res, email1, email2) {
+  try {
+    const user1 = await User.get(email1)
+    const user2 = await User.get(email2)
+
+
+
+    if (!user1 || !user2) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Users not found" }));
+    } else {
+      const messages = await Message.getConversation(user1.id, user2.id)
+      if (!messages){
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Messages not found" }));
+      }
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(messages));
     }
   } catch (error) {
     console.log(error);
@@ -34,12 +68,19 @@ async function createMessage(req, res) {
   try {
     const body = await getPostData(req);
 
-    const { fromUserID, toUserID, content } = JSON.parse(body);
+    const { from, to, content } = JSON.parse(body);
 
+    const user1= await User.get(from)
+    const user2= await User.get(to)
+
+    if (!user1 || !user2){
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Users not found" }));
+    }
     
     const message = {
-      fromUserID,
-      toUserID,
+      fromUserID: user1.id,
+      toUserID: user2.id,
       content,
     };
 
@@ -51,56 +92,10 @@ async function createMessage(req, res) {
   }
 }
 
-async function updateMessage(req, res, id) {
-  try {
-    const mess = await Message.getById(id);
-    console.log(mess);
-
-    if (!mess) {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Message not found" }));
-    } else {
-    }
-    const body = await getPostData(req);
-    const { fromUserID, toUserID, content } = JSON.parse(body);
-
-    const messageData = {
-      fromUserID: fromUserID || mess.fromUserID,
-      toUserID: toUserID || mess.toUserID,
-      content: content|| mess.content,
-    };
-
-
-    const updatedMessage = await Message.update(id, messageData);
-    res.writeHead(201, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(updatedMessage));
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-async function deleteMessage(req, res, id) {
-  try {
-    const mess = await Message.getById(id);
-
-    if (!mess) {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Message not found" }));
-    } else {
-      await Message.remove(id)
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({message: `Message ${id} removed`}));
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 module.exports = {
   getMessages,
-  getMessage,
+  getForUser,
   createMessage,
-  updateMessage,
-  deleteMessage
+  getConversation
 };

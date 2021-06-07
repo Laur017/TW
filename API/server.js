@@ -1,15 +1,26 @@
 const http = require("http");
 const {
   getMessages,
-  getMessage,
   createMessage,
-  updateMessage,
-  deleteMessage,
+  getForUser, 
+  getConversation
 } = require("./controllers/messageController");
 
+const {
+  login,
+  register
+} = require("./controllers/userController");
+
+
 const server = http.createServer((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Request-Method", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "*");
   if (req.url === "/api/auth/login"&& req.method==="POST") {
+    login(req, res)
   } else if (req.url === "/api/auth/register" && req.method==="POST") {
+    register(req, res)
   } else if (req.url === "/api/messages") {
     switch (req.method) {
       case "GET":
@@ -24,25 +35,16 @@ const server = http.createServer((req, res) => {
 
         break;
     }
-  } else if (req.url.match(/\/api\/messages\/([0-9 a-z A-Z]+)/)) {
-    const id = req.url.split("/")[3];
+  } else if (req.url.split("?")[0]==="/api/messages" && req.method=="GET" && req.url.split("&").length == 1) {
+    const email = req.url.split("?email=")[1];
+    getForUser(req, res, email);
 
-    switch (req.method) {
-      case "GET":
-        getMessage(req, res, id);
-        break;
-      case "PUT":
-        updateMessage(req, res, id);
-        break;
-      case "DELETE":
-        deleteMessage(req, res, id);
-        break;
-      default:
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Not found" }));
-
-        break;
-    }
+  } else if (req.url.split("?")[0]==="/api/messages" && req.method=="GET" && req.url.split("&").length == 2)
+  {
+      let email1 = req.url.split("?from=")[1];
+      email1=email1.split("&")[0]
+      const email2 = req.url.split("&to=")[1];
+      getConversation(req, res, email1, email2)
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: "Not found" }));

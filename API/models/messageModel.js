@@ -22,9 +22,9 @@ function getAll() {
   });
 }
 
-function getById(id) {
+function getForUser(id) {
   return new Promise((resolve, reject) => {
-    let query = `SELECT * FROM messages where id = "${id}" `;
+    let query = `SELECT * FROM messages where fromUserID=${id} or toUserID= ${id} `;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
       resolve(result[0]);
@@ -32,52 +32,33 @@ function getById(id) {
   });
 }
 
+function getConversation(id1, id2) {
+  return new Promise((resolve, reject) => {
+    let query = `SELECT * FROM messages where (fromUserID=${id1} AND toUserID=${id2}) or (fromUserID=${id2} AND toUserID= ${id1})`;
+    con.query(query, function (err, result, fields) {
+      if (err) throw err;
+      resolve(result);
+    });
+  });
+}
+
+
 function create(message) {
   return new Promise((resolve, reject) => {
-    let id = uuidv4();
-    let query = `INSERT INTO messages values( '${id}', '${
+    let query = `INSERT INTO messages (fromUserID, toUserID, content) values(${
       message.fromUserID
-    }', '${message.toUserID}', '${message.content}')`;
-    let newMessage = {'id': id, ...message};
+    }, ${message.toUserID}, '${message.content}')`;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
-      resolve(newMessage);
+      resolve(message);
     });
   });
 }
 
-function update(id, message) {
-  return new Promise(async (resolve, reject) => {
-    
-    let query = `UPDATE messages set fromUserID = '${message.fromUserID}',
-                                     toUserID = '${message.toUserID}',
-                                     content = '${message.content}'
-                                     where id ='${id}'`;
-
-    
-    con.query(query, function (err, result, fields) {
-      if (err) throw err;
-      dbMessage = getById(id);
-      resolve(dbMessage);
-    });
-                                     
-  });
-}
-
-function remove(id) {
-  return new Promise((resolve, reject) => {
-     let query = `DELETE FROM messages where id = "${id}" `;
-     con.query(query, function (err, result, fields) {
-      if (err) throw err;
-      resolve();
-    });
-  });
-}
 
 module.exports = {
   getAll,
-  getById,
+  getForUser,
   create,
-  update,
-  remove,
+  getConversation
 };
