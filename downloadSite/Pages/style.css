@@ -1,0 +1,11 @@
+
+.container{
+  padding-top: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.container .links{
+    padding-top: 50px;
+}
