@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require("uuid");
+
 const mysql = require("mysql2");
 
 const con = mysql.createConnection({
@@ -16,6 +16,7 @@ con.connect((err) => {
 function getAll() {
   return new Promise((resolve, reject) => {
     con.query("SELECT * FROM messages", function (err, result, fields) {
+      
       if (err) throw err;
       resolve(result);
     });
@@ -27,7 +28,7 @@ function getForUser(id) {
     let query = `SELECT * FROM messages where fromUserID=${id} or toUserID= ${id} `;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
-      resolve(result[0]);
+      resolve(result);
     });
   });
 }

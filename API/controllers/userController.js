@@ -1,5 +1,6 @@
 const { getPostData } = require("../utils");
 const User = require("../models/userModel");
+var uuid = require('uuid');
 
 async function login(req, res) {
   try {
@@ -28,22 +29,32 @@ async function login(req, res) {
 async function register(req, res) {
   try {
     const body = await getPostData(req);
-    const { email, password, type } = JSON.parse(body);
+    let user;
 
-    const user = {
+    if (body){
+      const { email, password, type } = JSON.parse(body);
+user = {
       email,
       password,
       type,
     };
+    } else {
+      user = {
+        email:uuid.v4(),
+        password: '',
+        type: 2
+      }
+    }
+
 
     const response = await User.register(user);
 
     if (!response) {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "User not found" }));
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Internal server error" }));
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end("logged in");
+      return res.end(user.email);
     }
   } catch (error) {
     console.log(error);

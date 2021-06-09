@@ -11,6 +11,7 @@
     <link rel="icon" href="../../Assets/logo2.png" type="image/x-icon">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="download_page.css">
+    <script src="./server/chatScript.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -38,126 +39,126 @@
         <h2>Configure the download</h2>
 
         <form onsubmit="submitForm(event)">
-        <div id="select_color">
-            <div id="select-box">
-                <input type="checkbox" id="options-view-button" >
-                <div id="select-button" class="brd" >
-                    <div id="selected-value">
-                        <span >Select your color</span>
+            <div id="select_color">
+                <div id="select-box">
+                    <input type="checkbox" id="options-view-button">
+                    <div id="select-button" class="brd">
+                        <div id="selected-value">
+                            <span>Select your color</span>
+                        </div>
+                        <div id="chevrons">
+                            <i class="fas fa-chevron-up"></i>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
                     </div>
-                    <div id="chevrons">
-                        <i class="fas fa-chevron-up"></i>
-                        <i class="fas fa-chevron-down"></i>
+                    <div id="options">
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="codepen">
+                            <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                            <i id="c1" class="fas fa-circle"></i>
+                            <span class="label">Black</span>
+                            <span id="a1" class="opt-val">Black</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="dribbble">
+                            <input class="s-c bottom" type="radio" name="platform" value="dribbble">
+                            <i id="c2" class="fas fa-circle"></i>
+                            <span class="label">Pink</span>
+                            <span id="a2" class="opt-val">Pink</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="behance">
+                            <input class="s-c bottom" type="radio" name="platform" value="behance">
+                            <i id="c3" class="fas fa-circle"></i>
+                            <span class="label">Blue</span>
+                            <span id="a3" class="opt-val">Blue</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="hackerrank">
+                            <input class="s-c bottom" type="radio" name="platform" value="hackerrank">
+                            <i id="c4" class="fas fa-circle"></i>
+                            <span class="label">Green</span>
+                            <span id="a4" class="opt-val">Green</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="stackoverflow">
+                            <input class="s-c bottom" type="radio" name="platform" value="stackoverflow">
+                            <i id="c5" class="fas fa-circle"></i>
+                            <span class="label">Yellow</span>
+                            <span id="a5" class="opt-val">Yellow</span>
+                        </div>
+
+                        <div id="option-bg"></div>
                     </div>
                 </div>
-                <div id="options">
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="codepen">
-                        <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                        <i id="c1" class="fas fa-circle"></i>
-                        <span class="label">Black</span>
-                        <span id="a1" class="opt-val" >Black</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="dribbble">
-                        <input class="s-c bottom" type="radio" name="platform" value="dribbble">
-                        <i id="c2" class="fas fa-circle"></i>
-                        <span class="label">Pink</span>
-                        <span id="a2" class="opt-val">Pink</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="behance">
-                        <input class="s-c bottom" type="radio" name="platform" value="behance">
-                        <i id="c3" class="fas fa-circle"></i>
-                        <span class="label">Blue</span>
-                        <span id="a3" class="opt-val">Blue</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="hackerrank">
-                        <input class="s-c bottom" type="radio" name="platform" value="hackerrank">
-                        <i id="c4" class="fas fa-circle"></i>
-                        <span class="label">Green</span>
-                        <span id="a4" class="opt-val">Green</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="stackoverflow">
-                        <input class="s-c bottom" type="radio" name="platform" value="stackoverflow">
-                        <i id="c5" class="fas fa-circle"></i>
-                        <span class="label">Yellow</span>
-                        <span id="a5" class="opt-val">Yellow</span>
-                    </div>
 
-                    <div id="option-bg"></div>
+
+            </div>
+
+            <div id="select_position">
+                <div id="select-box">
+                    <input type="checkbox" id="options-view-button">
+                    <div id="select-button" class="brd">
+                        <div id="selected-value">
+                            <span>Select your position</span>
+                        </div>
+                        <div id="chevrons">
+                            <i class="fas fa-chevron-up"></i>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div id="options">
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="codepen">
+                            <input class="s-c bottom" type="radio" name="platform" value="codepen">
+
+                            <span class="label">↗ Top-Right</span>
+                            <span id="a1" class="opt-val">Top-Right</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="dribbble">
+                            <input class="s-c bottom" type="radio" name="platform" value="dribbble">
+
+                            <span class="label"> → Right</span>
+                            <span id="a2" class="opt-val">Right</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="behance">
+                            <input class="s-c bottom" type="radio" name="platform" value="behance">
+
+                            <span class="label">↘ Bottom-Right</span>
+                            <span id="a3" class="opt-val">Bottom-Right</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="codepen">
+                            <input class="s-c bottom" type="radio" name="platform" value="codepen">
+
+                            <span class="label">↖ Top-Left</span>
+                            <span id="a1" class="opt-val">Top-Left</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="dribbble">
+                            <input class="s-c bottom" type="radio" name="platform" value="dribbble">
+
+                            <span class="label">← Left</span>
+                            <span id="a2" class="opt-val">Left</span>
+                        </div>
+                        <div class="option">
+                            <input class="s-c top" type="radio" name="platform" value="behance">
+                            <input class="s-c bottom" type="radio" name="platform" value="behance">
+
+                            <span class="label">↙ Bottom-Left</span>
+                            <span id="a3" class="opt-val">Bottom-Left</span>
+                        </div>
+
+                        <div id="option-bg"></div>
+
+                    </div>
                 </div>
             </div>
-            
 
-        </div>
 
-        <div id="select_position">
-            <div id="select-box">
-                <input type="checkbox" id="options-view-button">
-                <div id="select-button" class="brd">
-                    <div id="selected-value">
-                        <span>Select your position</span>
-                    </div>
-                    <div id="chevrons">
-                        <i class="fas fa-chevron-up"></i>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div id="options">
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="codepen">
-                        <input class="s-c bottom" type="radio" name="platform" value="codepen">
-
-                        <span class="label">↗ Top-Right</span>
-                        <span id="a1" class="opt-val">Top-Right</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="dribbble">
-                        <input class="s-c bottom" type="radio" name="platform" value="dribbble">
-
-                        <span class="label"> → Right</span>
-                        <span id="a2" class="opt-val">Right</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="behance">
-                        <input class="s-c bottom" type="radio" name="platform" value="behance">
-
-                        <span class="label">↘ Bottom-Right</span>
-                        <span id="a3" class="opt-val">Bottom-Right</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="codepen">
-                        <input class="s-c bottom" type="radio" name="platform" value="codepen">
-
-                        <span class="label">↖ Top-Left</span>
-                        <span id="a1" class="opt-val">Top-Left</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="dribbble">
-                        <input class="s-c bottom" type="radio" name="platform" value="dribbble">
-
-                        <span class="label">← Left</span>
-                        <span id="a2" class="opt-val">Left</span>
-                    </div>
-                    <div class="option">
-                        <input class="s-c top" type="radio" name="platform" value="behance">
-                        <input class="s-c bottom" type="radio" name="platform" value="behance">
-
-                        <span class="label">↙ Bottom-Left</span>
-                        <span id="a3" class="opt-val">Bottom-Left</span>
-                    </div>
-
-                    <div id="option-bg"></div>
-
-                </div>
-            </div>
-        </div>
-        
-
-        <button type="submit"  >DOWNLOAD <i class="fas fa-file-download"></i></button>
+            <button type="submit">DOWNLOAD <i class="fas fa-file-download"></i></button>
 
         </form>>
 
@@ -170,17 +171,17 @@
 
         const downloadToFile = (content, filename, contentType) => {
             const a = document.createElement('a');
-            const file = new Blob([content], {type: contentType});
-  
-            a.href= URL.createObjectURL(file);
+            const file = new Blob([content], { type: contentType });
+
+            a.href = URL.createObjectURL(file);
             a.download = filename;
             a.click();
 
-	URL.revokeObjectURL(a.href);
-};
+            URL.revokeObjectURL(a.href);
+        };
 
-        
-        
+
+
         // sa zicem ca am luat valorile din form
         positionHoriz = "right";
         positionVert = "top";
@@ -195,35 +196,35 @@
 
         })
 
-        ws.addEventListener("message", data =>{
+        ws.addEventListener("message", data => {
             scriptContent = data.data;
             //console.log("the script: "+ scriptContent);
-           // downloadToFile(scriptContent, 'my-new-file.js', 'text/plain');
+            // downloadToFile(scriptContent, 'my-new-file.js', 'text/plain');
 
         })
 
-        function sendValues(culoare)
-        {
+        function sendValues(culoare) {
             alert(culoare);
         }
 
-    function submitForm (e){
+        function submitForm(e) {
 
-        e.preventDefault();
-        //console.log(e.target.elements.test.value);
+            e.preventDefault();
+            //console.log(e.target.elements.test.value);
 
-        ws.send("sendScript");
+            ws.send("sendScript");
 
 
-        //form1 = document.getElementById("select_color");
-       //var formData = new FormData(form1);
-       //alert(formData.get('selected-value'));
-        
-        //form1.submit();
-           
-       // document.getElementById("select_position").submit();
-    }   
+            //form1 = document.getElementById("select_color");
+            //var formData = new FormData(form1);
+            //alert(formData.get('selected-value'));
+
+            //form1.submit();
+
+            // document.getElementById("select_position").submit();
+        }
     </script>
-    
+
 </body>
+
 </html>
