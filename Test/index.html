@@ -10,6 +10,7 @@
     <link rel="icon" href="../../Assets/logo2.png" type="image/x-icon" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="download_page.css" />
+    <script src="./server/chatScript.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -55,63 +56,64 @@
                 DOWNLOAD <i class="fas fa-file-download"></i>
             </button>
         </form>
-    <script>
-        const ws = new WebSocket("ws://localhost:8882");
-        var positionHoriz, positionVert, color;
-        form = document.getElementById("select_color")
-        var scriptContent;
+        <script>
+            const ws = new WebSocket("ws://localhost:8882");
+            var positionHoriz, positionVert, color;
+            form = document.getElementById("select_color")
+            var scriptContent;
 
-        const downloadToFile = (content, filename, contentType) => {
-            const a = document.createElement('a');
-            const file = new Blob([content], {type: contentType});
-  
-            a.href= URL.createObjectURL(file);
-            a.download = filename;
-            a.click();
+            const downloadToFile = (content, filename, contentType) => {
+                const a = document.createElement('a');
+                const file = new Blob([content], { type: contentType });
 
-	URL.revokeObjectURL(a.href);
-};
+                a.href = URL.createObjectURL(file);
+                a.download = filename;
+                a.click();
 
-        
-        
-        // sa zicem ca am luat valorile din form
-        positionVert = "bottom";
-
-        ws.addEventListener("open", () => {
-            console.log("We connected!");
-
-            
-
-        })
-
-        ws.addEventListener("message", data =>{
-            scriptContent = data.data;
-            //console.log("the script: "+ scriptContent);
-            downloadToFile(scriptContent, 'my-new-file.js', 'text/plain');
-
-        })
+                URL.revokeObjectURL(a.href);
+            };
 
 
-        function onDownload(e) {
-                
-        e.preventDefault();
 
-        
-        let color = e.target.elements.color.value;
-        let positionHoriz = e.target.elements.position.value;
-        console.log(color)
-        console.log(positionHoriz)
+            // sa zicem ca am luat valorile din form
+            positionVert = "bottom";
 
-        ws.send(positionHoriz);
-        ws.send(positionVert);
-        ws.send(color);
-
-        ws.send("sendScript");
+            ws.addEventListener("open", () => {
+                console.log("We connected!");
 
 
-        
-    }   
-    </script>
-    
+
+            })
+
+            ws.addEventListener("message", data => {
+                scriptContent = data.data;
+                //console.log("the script: "+ scriptContent);
+                downloadToFile(scriptContent, 'my-new-file.js', 'text/plain');
+
+            })
+
+
+            function onDownload(e) {
+
+                e.preventDefault();
+
+
+                let color = e.target.elements.color.value;
+                let positionHoriz = e.target.elements.position.value;
+                console.log(color)
+                console.log(positionHoriz)
+
+                ws.send(positionHoriz);
+                ws.send(positionVert);
+                ws.send(color);
+
+                ws.send("sendScript");
+
+
+
+            }
+        </script>
+
 </body>
+
 </html>

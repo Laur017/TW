@@ -69,6 +69,7 @@ async function createMessage(req, res) {
     const body = await getPostData(req);
 
     const { from, to, content } = JSON.parse(body);
+  
 
     const user1= await User.get(from)
     const user2= await User.get(to)
