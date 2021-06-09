@@ -8,11 +8,17 @@ const {
 
 const {
   login,
-  register
+  sendActivationCode,
+  sendResetCode,
+  checkActivationCode,
+  checkResetCode,
+  register,
+
 } = require("./controllers/userController");
 
 
 const server = http.createServer((req, res) => {
+  //console.log(req.url)
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Request-Method", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
@@ -21,7 +27,16 @@ const server = http.createServer((req, res) => {
     login(req, res)
   } else if (req.url === "/api/auth/register" && req.method==="POST") {
     register(req, res)
-  } else if (req.url === "/api/messages") {
+  } else if (req.url.split("?")[0]==="/api/auth/activateCode" && req.method=="POST" ){
+    sendActivationCode(req, res)
+  } else if (req.url.split("?")[0]==="/api/auth/resetPasswordCode" && req.method=="POST" ){
+    sendResetCode(req, res)
+  }else if (req.url.split("?")[0]==="/api/auth/activate" && req.method=="POST"){
+    checkActivationCode(req, res)
+  } else if (req.url.split("?")[0]==="/api/auth/resetPassword" && req.method=="POST" ){
+    checkResetCode(req, res)
+  }
+  else if (req.url === "/api/messages") {
     switch (req.method) {
       case "GET":
         getMessages(req, res);

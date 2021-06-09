@@ -123,3 +123,7 @@ nav>a {
   }
 
 }
+
+.hidden{
+  display: none;
+}

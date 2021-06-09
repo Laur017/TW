@@ -35,12 +35,16 @@
     <img src="../../Assets/activate-account-background.jpg" alt="activate_account_image" />
     <div class="second_part">
       <div class="act">Activate your account</div>
-      <form class="account_activate" action="/set_new_password" method="POST" onsubmit="onSubmit()">
+      <form class="account_activate" onsubmit="formSubmit(event)">
 
-        <input type="text" placeholder="Mobile number or email" required
-          pattern="^([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3})|(\d{3}\d{3}\d{4})$" /><br />
-        <input type="text" placeholder="Activation code" required />
-        <button type="submit">Sign up</button>
+        <input type="email" name="email" placeholder="Email" required /><br />
+        <div id="accountActive" class="hidden">Your account is already active!</div>
+        <div id="activationCode" class="hidden">
+          <input name="code" id="activationCodeInput" disabled type="text" placeholder="Activation code" required />
+          <div id="invalidCode" class="hidden">Invalid code!</div>
+          <button type="submit">Sign up</button>
+        </div>
+        <button id="submitEmailButton" name="submitEmailButton" type="submit">Send the code</button>
       </form>
       <div class="cal">
         You already have an account ?<a href="../Login/login.html" class="footter">Login here</a>

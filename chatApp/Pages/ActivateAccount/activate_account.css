@@ -102,6 +102,10 @@ ul li ul:hover {
   margin-top: 40px;
 }
 
+.hidden{
+  display: none;
+}
+
 .footter {
   display: flex;
   justify-content: center;
