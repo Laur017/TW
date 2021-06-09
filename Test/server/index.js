@@ -19,7 +19,7 @@ wss.on ("connection", ws =>{
 
         if(data == "sendScript")
         {
-            changeScript(scriptVariables[0], scriptVariables[1]);
+            changeScript(scriptVariables[0], scriptVariables[1],scriptVariables[2]);
             ws.send(scriptContent);
         }
         
@@ -31,7 +31,7 @@ wss.on ("connection", ws =>{
     })
 });
 
-function changeScript(oriz,vert)
+function changeScript(oriz,vert,color)
 {
     fs.readFile(__dirname + "\\chatScript.js", function (err, data){
 
@@ -44,8 +44,8 @@ function changeScript(oriz,vert)
         scriptContent = scriptContent.replace("PozOriz", oriz);
         scriptContent = scriptContent.replace("PozVert", vert);
         scriptContent = scriptContent.replace("PozVert", vert);
-        scriptContent = scriptContent.replace("VarColor", "green");
-        console.log(scriptContent);
+        scriptContent = scriptContent.replace("VarColor", color);
+        //console.log(scriptContent);
 
     
     });
