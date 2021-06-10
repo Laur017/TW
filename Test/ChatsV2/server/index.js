@@ -17,7 +17,7 @@ function checkPopupChatMsg(msgToCmp)
     {
         if(request.readyState == 4)
         {        
-            console.log(request.responseText);   
+          //  console.log(request.responseText);   
             apiResp = JSON.parse( request.responseText);
             apiResp.forEach(element => {
                 //console.log("The message: " + element.content);
@@ -39,16 +39,22 @@ function checkPopupChatMsg(msgToCmp)
 
 wss.on ("connection", ws =>{
     console.log("Client connected!");
-   setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
+   if(lastMsg)
+   {
+       setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
+   }
     ws.on("close", () =>{
 
         console.log("Client disconnected!");
     })
 
     ws.on("message", data =>{
-        console.log(data.toString());
-        broadcast(data.toString());
-        lastMsg = data.toString();
+
+        let themsg = JSON.parse(data.toString());
+
+        console.log(themsg.username);
+        broadcast(themsg.text);
+        lastMsg = themsg.text;
         console.log("LastMsg: " + lastMsg);
     })
 
