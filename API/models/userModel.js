@@ -1,5 +1,7 @@
 const mysql = require("mysql2");
 var nodemailer = require('nodemailer');
+var sha1 = require('sha1');
+
 
 var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -56,6 +58,7 @@ function get(email) {
 
 function login(user) {
   return new Promise((resolve, reject) => {
+    user.password =  sha1(user.password)
     let query = `SELECT * FROM users where email = "${user.email}" and password = "${user.password}"`;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
@@ -68,6 +71,7 @@ function login(user) {
 
 function register(user) {
   return new Promise((resolve, reject) => {
+    user.password =  sha1(user.password)
     let selectQuery = `SELECT * FROM users where email = "${user.email}"`;
     con.query(selectQuery, function (err, result, fields) {
       if (err) {
