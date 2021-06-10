@@ -27,6 +27,15 @@ function getForUser(id) {
   return new Promise((resolve, reject) => {
     let query = `SELECT * FROM messages where fromUserID=${id} or toUserID= ${id} `;
     con.query(query, function (err, result, fields) {
+      result.forEach(message=>{
+        if (message.toUserId===id){
+          let updateQuery = `UPDATE messages SET \`read\` = 1 where id =${message.id}`
+          con.query(updateQuery, function (err, result, fields) {
+            if (err)
+            throw err
+          })
+        }
+      })
       if (err) throw err;
       resolve(result);
     });

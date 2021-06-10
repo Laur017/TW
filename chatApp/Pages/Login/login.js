@@ -37,6 +37,7 @@ function onLogin(event) {
 
   request.addEventListener("readystatechange", function () {
     if (this.readyState === 4 && this.status === 201) {
+      localStorage.setItem("email", user.email)
       window.location.href = "../Chat/chat.html";
     } else if (this.readyState === 4 && this.status === 404) {
       if (document.getElementById("not-found") == null) {
