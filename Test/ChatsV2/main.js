@@ -1,20 +1,21 @@
 const ws = new WebSocket("ws://localhost:3000");
 var form = document.getElementById('form');
 var input = document.getElementById('amess');
-var userID= Math.random() * 1000;
-userID = userID.toPrecision(3);
-let username = userID;
+//var userID= Math.random() * 1000;
+//userID = userID.toPrecision(3);
+//let username = userID;
 var messages = document.getElementById('tryid');
 var usernameReg;
 
 
-
+var email =  localStorage.getItem("email");
 
 
 ws.addEventListener("open", () => {
     console.log("We connected!");
     getPrevMsg();
     register();
+    console.log(localStorage);
 
 })
 
@@ -27,7 +28,9 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
     
     if (input.value) {
-      ws.send(input.value);
+      let someVar = JSON.stringify(formatMessage(usernameReg,input.value))
+      ws.send(someVar)
+      //ws.send(input.value);
       sendMessage(input.value," Me");
       input.value = '';
     }
@@ -162,4 +165,12 @@ function getPrevMsg()
     request.send();
 
 
+  }
+
+  function formatMessage(username, text)
+  {
+    return{
+      username,
+      text
+    }
   }
