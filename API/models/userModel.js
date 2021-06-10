@@ -46,7 +46,7 @@ function getAll() {
 
 function get(email) {
   return new Promise((resolve, reject) => {
-    let query = `SELECT * FROM users where email = "${email}"`;
+    let query = `SELECT id, email, name, type FROM users where email = "${email}"`;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
       if (result.length !== 0) {

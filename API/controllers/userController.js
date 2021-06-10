@@ -115,6 +115,20 @@ async function sendResetCode(req, res) {
   }
 }
 
+async function getUser(req, res, email){
+
+  let user = await User.get(email)
+  if (!user) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "User doesn't exist" }));
+      return;
+    } else {
+      res.writeHead(201, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(user));
+    }
+
+}
+
 async function checkActivationCode(req, res) {
   checkCode(req, res, "activation");
 }
@@ -149,11 +163,14 @@ async function checkCode(req, res, type) {
   }
 }
 
+
+
 module.exports = {
   login,
   register,
   sendActivationCode,
   sendResetCode,
   checkActivationCode,
-  checkResetCode
+  checkResetCode,
+  getUser
 };

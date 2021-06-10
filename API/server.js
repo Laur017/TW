@@ -13,7 +13,7 @@ const {
   checkActivationCode,
   checkResetCode,
   register,
-
+  getUser
 } = require("./controllers/userController");
 
 
@@ -34,7 +34,11 @@ const server = http.createServer((req, res) => {
     checkActivationCode(req, res)
   } else if (req.url.split("?")[0]==="/api/auth/resetPassword" && req.method=="POST" ){
     checkResetCode(req, res)
+  }else if (req.url.split("?")[0]==="/api/users" && req.method=="GET" ){
+    const email = req.url.split("?email=")[1];
+    getUser(req, res, email)
   }
+
   else if (req.url === "/api/messages") {
     switch (req.method) {
       case "GET":
