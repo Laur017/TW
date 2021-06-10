@@ -1,0 +1,126 @@
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.header a:hover {
+  color: #71926c;
+}
+
+
+
+
+
+.header li {
+  color: rgb(39, 39, 39);
+}
+
+.header li a {
+  color: rgb(55, 55, 55);
+}
+
+.header li:hover {
+  color: #71926c;
+}
+
+
+.header ul li:hover > ul,
+ul li ul:hover {
+  color: #71926c;
+}
+
+
+.activate_account {
+  margin: 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  text-align: center;
+}
+.activate_account img {
+  max-width: 50%;
+  height: auto;
+}
+
+.activate_account > .second_part {
+  
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.cal {
+  margin-bottom: 20px;
+}
+
+.act {
+  color: #71926c;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.account_activate{
+  font-size: larger;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.account_activate input {
+  font-size:18px;
+  border: none;
+  border-bottom: 1px solid #71926c;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+.account_activate ::placeholder {
+  color: gray;
+  font-size: 1rem;
+}
+.account_activate input:focus {
+  border: none;
+}
+
+.account_activate button {
+  padding: 16px 32px;
+  border-radius: 25px;
+  background-color: #71926c;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: serif;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.hidden{
+  display: none;
+}
+
+.footter {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-left: 1%;
+  text-decoration: none;
+  color: #71926c;
+}
+
+/* .footer a {
+        text-decoration: none;
+        color: #71926C;
+      } */
+@media (max-width: 777px) {
+       .activate_account > img {
+    display: none;
+  }
+}
