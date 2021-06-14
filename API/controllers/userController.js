@@ -18,8 +18,10 @@ async function login(req, res) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "User not found" }));
     } else {
+
+      const user2= await User.get(email)
       res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end("logged in");
+      return res.end(JSON.stringify(user2));
     }
   } catch (error) {
     console.log(error);

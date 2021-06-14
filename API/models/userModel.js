@@ -59,12 +59,12 @@ function get(email) {
 function login(user) {
   return new Promise((resolve, reject) => {
     user.password =  sha1(user.password)
-    let query = `SELECT * FROM users where email = "${user.email}" and password = "${user.password}"`;
+    let query = `SELECT id, name, email FROM users where email = "${user.email}" and password = "${user.password}"`;
     
     con.query(query, function (err, result, fields) {
       if (err) throw err;
       if (result.length !== 0) {
-        resolve("found");
+        resolve(result[0]);
       } else resolve();
     });
   });
