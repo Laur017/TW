@@ -10,26 +10,29 @@ var usernameReg;
 
 var email =  localStorage.getItem("email");
 
-
 ws.addEventListener("open", () => {
     console.log("We connected!");
+    loginMessage();
     getPrevMsg();
     register();
-    console.log(localStorage);
+//    console.log(localStorage);
+    console.log("THE EMAIL: " + email)
+
 
 })
 
 ws.addEventListener("message", data =>{
-    //console.log(data);
-    getMessage(data.data,"Altcineva");
+  //console.log(data.data);
+    let themsg = JSON.parse(data.data);
+    getMessage(themsg.text,themsg.username);
 })
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
     
     if (input.value) {
-      let someVar = JSON.stringify(formatMessage(usernameReg,input.value))
-      ws.send(someVar)
+      let msgObj = JSON.stringify(formatMessage(email,input.value))
+      ws.send(msgObj)
       //ws.send(input.value);
       sendMessage(input.value," Me");
       input.value = '';
@@ -88,6 +91,7 @@ const urlMessage = "http://localhost:5000/api/messages";
 }
 
         let data = JSON.stringify({
+         // id : 232323,
           from : usernameReg,
           to: "ss@ss",
           content: theMsg
@@ -114,6 +118,8 @@ function getMessage(theMsg,autor)
         var actualMsg = document.createElement('p');
         item.appendChild(actualMsg);
         actualMsg.textContent = theMsg;
+        window.scrollTo(0, Number.MAX_VALUE);
+
 }
 
 function register ()
@@ -125,7 +131,7 @@ function register ()
     if (this.readyState === 4 && this.status === 201) {
       let resp = request.response
       usernameReg = resp
-      console.log(usernameReg)
+     console.log(request.responseText)
       // e ok
 
     } else if (this.readyState === 4 && this.status === 500) {
@@ -141,7 +147,6 @@ function register ()
 
 function getPrevMsg()
 {
-  // get la api 
   const urlMessage1 = "http://localhost:5000/api/messages";
   var request = new XMLHttpRequest();
   
@@ -156,7 +161,7 @@ function getPrevMsg()
 
       
     apiResp.forEach(element => {
-      console.log("The message: " + element.content);
+      //console.log("The message: " + element.content);
       getMessage(element.content,element.fromUserId);
     });
      
@@ -173,4 +178,11 @@ function getPrevMsg()
       username,
       text
     }
+  }
+
+  function loginMessage()
+  {
+     let msgObj = JSON.stringify(formatMessage(email,''));
+      ws.send(msgObj)
+ 
   }

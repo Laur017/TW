@@ -1,13 +1,52 @@
 const socket = require("ws");
 const wss = new socket.Server({port: 3000});
-
+var clientslist = [];
 
 
 const urlMessage = "http://localhost:5000/api/messages";
-
 var lastMsg;
 
-function checkPopupChatMsg(msgToCmp)
+// get
+
+wss.on ("connection", ws =>{ 
+    clientslist.push(ws);
+    ws.id = 23;
+    console.log("Client connected!" + ws.id);
+    
+   if(lastMsg)
+       setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
+       
+    ws.on("close", () =>{
+
+        console.log("Client disconnected!");
+    })
+
+    ws.on("message", data =>{
+
+        let themsg = JSON.parse(data.toString());
+
+        console.log(themsg.username);
+        broadcast(themsg.text);
+        lastMsg = themsg.text;
+        //console.log("LastMsg: " + lastMsg);
+    })
+
+
+});
+
+function broadcast(data) {
+    let msgObj = JSON.stringify(formatMessage("noUserForNow",data))
+
+    wss.clients.forEach(client => client.send(msgObj));
+    
+  };
+
+  function addUser()
+  {
+      
+  }
+
+  function checkPopupChatMsg(msgToCmp)
 {
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
     var request = new XMLHttpRequest();
@@ -35,33 +74,10 @@ function checkPopupChatMsg(msgToCmp)
 }
 
 
-
-
-wss.on ("connection", ws =>{
-    console.log("Client connected!");
-   if(lastMsg)
-   {
-       setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
-   }
-    ws.on("close", () =>{
-
-        console.log("Client disconnected!");
-    })
-
-    ws.on("message", data =>{
-
-        let themsg = JSON.parse(data.toString());
-
-        console.log(themsg.username);
-        broadcast(themsg.text);
-        lastMsg = themsg.text;
-        console.log("LastMsg: " + lastMsg);
-    })
-
-
-});
-
-function broadcast(data) {
-    wss.clients.forEach(client => client.send(data));
-    
-  };
+  function formatMessage(username, text)
+  {
+    return{
+      username,
+      text
+    }
+  }
