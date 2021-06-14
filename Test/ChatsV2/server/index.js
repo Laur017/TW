@@ -6,13 +6,11 @@ var clientslist = [];
 const urlMessage = "http://localhost:5000/api/messages";
 var lastMsg;
 
-// get
-
 wss.on ("connection", ws =>{ 
+   
+    console.log(ws.username + " connected!");
     clientslist.push(ws);
-    ws.id = 23;
-    console.log("Client connected!" + ws.id);
-    
+  
    if(lastMsg)
        setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
        
@@ -25,25 +23,33 @@ wss.on ("connection", ws =>{
 
         let themsg = JSON.parse(data.toString());
 
-        console.log(themsg.username);
-        broadcast(themsg.text);
+        console.log("CHECK MY DATA ON MSG: " + themsg.username + ", " + themsg.id + themsg.text);
+        ws.id = themsg.id;
+        ws.username = themsg.username;
+        broadcast(ws, ws.username, themsg.text);
         lastMsg = themsg.text;
-        //console.log("LastMsg: " + lastMsg);
+        console.log("MAYBE IT WORKS " + clientslist[0].id);
     })
 
 
 });
 
-function broadcast(data) {
-    let msgObj = JSON.stringify(formatMessage("noUserForNow",data))
+function broadcast(ws,userPram,data) {
+    let msgObj = JSON.stringify(formatMessage(userPram,data))
 
-    wss.clients.forEach(client => client.send(msgObj));
+    wss.clients.forEach(client => {
+        if (client.id != ws.id)
+            client.send(msgObj)
+        
+        }
+    );
+    
+    
     
   };
 
-  function addUser()
+  function addUser(ws)
   {
-      
   }
 
   function checkPopupChatMsg(msgToCmp)
