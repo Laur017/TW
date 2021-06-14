@@ -15,7 +15,7 @@ async function getMessages(req, res) {
   }
 }
 
-async function getForUser(req, res, email) {
+async function getUsersMessages(req, res, email) {
   try {
     const user = await User.get(email)
 
@@ -25,7 +25,7 @@ async function getForUser(req, res, email) {
       res.end(JSON.stringify({ message: "User not found" }));
     } else {
 
-      const messages = await Message.getForUser(user.id)
+      const messages = await Message.getUsersMessages(user.id)
       if (!messages){
         res.writeHead(404, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Messages not found" }));
@@ -96,7 +96,7 @@ async function createMessage(req, res) {
 
 module.exports = {
   getMessages,
-  getForUser,
+  getUsersMessages,
   createMessage,
   getConversation
 };

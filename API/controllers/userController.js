@@ -1,6 +1,6 @@
 const { getPostData } = require("../utils");
 const User = require("../models/userModel");
-var uuid = require('uuid');
+var uuid = require("uuid");
 
 async function login(req, res) {
   try {
@@ -18,7 +18,7 @@ async function login(req, res) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "User not found" }));
     } else {
-      res.writeHead(201, { "Content-Type": "application/json" });
+      res.writeHead(200, { "Content-Type": "application/json" });
       return res.end("logged in");
     }
   } catch (error) {
@@ -31,21 +31,20 @@ async function register(req, res) {
     const body = await getPostData(req);
     let user;
 
-    if (body){
+    if (body) {
       const { email, password, type } = JSON.parse(body);
-user = {
-      email,
-      password,
-      type,
-    };
+      user = {
+        email,
+        password,
+        type,
+      };
     } else {
       user = {
-        email:uuid.v4(),
-        password: '',
-        type: 2
-      }
+        email: uuid.v4(),
+        password: "",
+        type: 2,
+      };
     }
-
 
     const response = await User.register(user);
 
@@ -115,18 +114,16 @@ async function sendResetCode(req, res) {
   }
 }
 
-async function getUser(req, res, email){
-
-  let user = await User.get(email)
+async function getUser(req, res, email) {
+  let user = await User.get(email);
   if (!user) {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "User doesn't exist" }));
-      return;
-    } else {
-      res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(user));
-    }
-
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "User doesn't exist" }));
+    return;
+  } else {
+    res.writeHead(201, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(user));
+  }
 }
 
 async function checkActivationCode(req, res) {
@@ -163,8 +160,6 @@ async function checkCode(req, res, type) {
   }
 }
 
-
-
 module.exports = {
   login,
   register,
@@ -172,5 +167,5 @@ module.exports = {
   sendResetCode,
   checkActivationCode,
   checkResetCode,
-  getUser
+  getUser,
 };

@@ -23,7 +23,7 @@ function getAll() {
   });
 }
 
-function getForUser(id) {
+function getUsersMessages(id) {
   return new Promise((resolve, reject) => {
     let query = `SELECT * FROM messages where fromUserID=${id} or toUserID= ${id} `;
     con.query(query, function (err, result, fields) {
@@ -69,7 +69,7 @@ function create(message) {
 
 module.exports = {
   getAll,
-  getForUser,
+  getUsersMessages,
   create,
   getConversation
 };
