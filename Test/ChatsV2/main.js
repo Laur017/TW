@@ -1,34 +1,43 @@
 const ws = new WebSocket("ws://localhost:3000");
+var sendTo;
 var form = document.getElementById('form');
 var input = document.getElementById('amess');
-//var userID= Math.random() * 1000;
-//userID = userID.toPrecision(3);
-//let username = userID;
+var emailInput = document.getElementById("emailTextInput");
+emailInput.onclick =() => {console.log(emailInput.value); sendTo = emailInput.value;}
 var messages = document.getElementById('tryid');
 var usernameReg;
+
+
+var email = localStorage.getItem("email");
+var password = localStorage.getItem("password")
 
 var clientData={
   username : '',
   email: email,
   password: password,
-  userID: 0
-
+  userID: -1
 }
 
-var email = localStorage.getItem("email");
-var password = localStorage.getItem("password")
+let sideBarUsers = [];
+sideBarUserObj = {
+  username:'',
+  lastMsg:''
+}
+
 
 ws.addEventListener("open", () => {
   console.log("We connected!");
+ 
   login();
   getPrevMsg();
-  
-  
+  console.log("USERNAME: "+clientData.username +"ID: "+ clientData.userID + "MAIL: " + clientData.email )
+ 
 })
 
 ws.addEventListener("message", data => {
   let themsg = JSON.parse(data.data);
   getMessage(themsg.text, themsg.username);
+  
 })
 
 form.addEventListener('submit', function (e) {
@@ -36,12 +45,15 @@ form.addEventListener('submit', function (e) {
 
   if (input.value) {
     let msgObj = JSON.stringify(formatMessage(clientData.username, input.value,clientData.userID))
-    console.log("ClientData Test: " + clientData.username + clientData.userID)
+   // console.log("ClientData Test: " + clientData.username + clientData.userID)
     ws.send(msgObj)
     //ws.send(input.value);
     sendMessage(input.value, " Me");
     input.value = '';
   }
+
+  console.log("DESTINATAR SETAT" + sendTo);
+
 });
 
 
@@ -93,8 +105,8 @@ function sendMessage(theMsg, autor) {
 
   let data = JSON.stringify({
     
-    from: "m@yahoo",
-    to: "ss@ss",
+    from: clientData.email,
+    to: sendTo,
     content: theMsg
   })
 
@@ -148,11 +160,12 @@ function login() {
   request.open("POST", url);
   request.send(JSON.stringify(msg));
 
-
+return 0;
 }
 
 function getPrevMsg() {
-  const urlMessage1 = "http://localhost:5000/api/messages";
+  
+  const urlMessage1 = "http://localhost:5000/api/messages?email="+email;
   var request = new XMLHttpRequest();
 
 
@@ -166,7 +179,19 @@ function getPrevMsg() {
 
     apiResp.forEach(element => {
       //console.log("The message: " + element.content);
-      getMessage(element.content, element.fromUserId);
+      if(element.fromUserId != clientData.userID){
+        
+        sideBarUserObj.username = element.fromUserId;
+        sideBarUserObj.lastMsg = element.content;
+        getMessage(element.content, element.fromUserId);
+
+        if(!sideBarUsers.some(elem => elem.username === element.fromUserId)){
+          sideBarUsers.push(sideBarUserObj);
+          addSidebarUser("User " + element.fromUserId);
+        }
+
+      }
+
     });
 
   })
@@ -184,8 +209,29 @@ function formatMessage(username, text,id) {
   }
 }
 
-function loginMessage() {
-  let msgObj = JSON.stringify(formatMessage(usernameReg, ''));
-  ws.send(msgObj)
+function addSidebarUser(username)
+{
+  var theList = document.getElementById('sidebarList');
+  var theRMsg = document.createElement('p');
+  var item = document.createElement('li');
+  var userParagraph = document.createElement('p');
+  userParagraph.id = username;
+  userParagraph.textContent = username;
+  var profilePic = document.createElement('img');
+  profilePic.src="ProfilePic.png";
+  profilePic.style="display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;";
+  //item.textContent = username;
+  item.appendChild(profilePic);
+  theList.appendChild(item);
+  theRMsg.id = "rec-msg";
+  theRMsg.textContent="Un mesaj recent";
+  item.appendChild(userParagraph);
+  item.appendChild(theRMsg);
+  item.onclick = ()=>{console.log("am apasat pe " + username); sendTo = username}
+  sideBarUserObj = {
+    username: username,
+    lastMsg: theRMsg
+  }
 
 }
+

@@ -32,7 +32,7 @@ function onLogin(event) {
 
   let user = {
     email: event.target.elements.email.value,
-    password: event.target.elements.password.value,
+    password:  event.target.elements.password.value,
   };
 
   request.addEventListener("readystatechange", function () {
