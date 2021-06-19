@@ -1,21 +1,24 @@
 const socket = require("ws");
 const wss = new socket.Server({port: 3000});
 var clientslist = [];
-var chatMicIds = [];
+var popUpClientsList = [];
+var oldUsrList = [];
 
-//
 
 const urlMessage = "http://localhost:5000/api/messages";
 var lastMsg;
 
+
 wss.on ("connection", ws =>{ 
    
     console.log(ws.username + " connected!");
+
     clientslist.push(ws);
   
-   if(lastMsg) // client list are doua bucati(vad daca vb intre ei si trimit la toata lumea), sau una(trimit lui)
+getUsersList();
+    // client list are doua bucati(vad daca vb intre ei si trimit la toata lumea), sau una(trimit lui)
    //tin cont de usr chat mic si daca mai trimite ceva
-       setInterval( function(){ checkPopupChatMsg(ws);}, 1000);
+       setInterval( function(){ checkPopupChatMsg();}, 1000);
        
     ws.on("close", () =>{
 
@@ -51,11 +54,8 @@ function broadcast(idnu,userPram,data) {
     
   };
 
-  function addUser(ws)
-  {
-  }
 
-  function checkPopupChatMsg(ws)
+  function checkPopupChatMsg()
 {
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
     var request = new XMLHttpRequest();
@@ -64,21 +64,34 @@ function broadcast(idnu,userPram,data) {
     request.onreadystatechange = function()
     {
         if(request.readyState == 4)
-        {        
-          //  console.log(request.responseText);   
+        {
             apiResp = JSON.parse( request.responseText);
             apiResp.forEach(element => {
-                //console.log("The message: " + element.content);
+                
                 size++;
               });
               //  console.log("nr of msg:" + size)
               //  console.log("ultimul mesaj: " + apiResp[size-1].content);
-            if(!clientslist.some(elem => elem.id === apiResp[size -1].fromUserId))
-            {
+            if(!popUpClientsList.some(elem => elem.id === apiResp[size -1].fromUserId)){ // daca nu e din chatul mic(salvat)
+                //oldclients
+                if(!oldUsrList.some(elem => elem.id === apiResp[size -1].fromUserId ))
+                    if(!clientslist.some(elem => elem.id === apiResp[size -1].fromUserId)) // si nu e de pe chatul mare
+                    {
+                        console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
+                        broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content);
+                        popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
+                    }
+            }else{
+             if(!popUpClientsList.some(elem => elem.msgId === apiResp[size -1].id))
+             {
                 console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
                 broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content);
-                clientslist.push({id: apiResp[size-1].fromUserId});
+                popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
+                
+             }
+             popUpClientsList.forEach(element => console.log("POPUPCLIENT: " + element.id))
             }
+            
         }
     }
 
@@ -86,6 +99,44 @@ function broadcast(idnu,userPram,data) {
     request.send();
 }
 
+function getUsersList()
+{
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
+    var request = new XMLHttpRequest();
+    var apiResp;
+
+    request.onreadystatechange = function()
+    {
+        if(request.readyState == 4)
+        {
+          
+          //  console.log(request.responseText);   
+            apiResp = JSON.parse( request.responseText);
+            apiResp.forEach(element => {
+
+                if(!oldUsrList.some(elem => elem.id === element.fromUserId)){
+
+                    oldUsrList.push({id : element.fromUserId});
+                    //console.log( "unul dintre id uri: " + element.fromUserId)
+                
+                }
+
+                if(!oldUsrList.some(elem => elem.id === element.toUserId)){
+
+                    oldUsrList.push({id : element.toUserId});
+                    //console.log( "unul dintre id uri: " + element.fromUserId)
+                
+                }
+
+              });
+            
+        }
+        //oldUsrList.forEach(element => console.log("OldList: " + element.id))
+    }
+    request.open("GET", urlMessage, true);
+    request.send();
+
+}
 
   function formatMessage(username, text)
   {

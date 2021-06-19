@@ -31,6 +31,10 @@ body {
 ul {
 	list-style: none;
 }
+textarea{
+	resize: none;
+	width: 100%;
+}
 
 .big-container {
 	max-width: 95%;

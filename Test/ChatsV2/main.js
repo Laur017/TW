@@ -30,12 +30,13 @@ ws.addEventListener("open", () => {
  
   login();
   getPrevMsg();
-  console.log("USERNAME: "+clientData.username +"ID: "+ clientData.userID + "MAIL: " + clientData.email )
+  //console.log("USERNAME: "+clientData.username +"ID: "+ clientData.userID + "MAIL: " + clientData.email )
  
 })
 
 ws.addEventListener("message", data => {
   let themsg = JSON.parse(data.data);
+  //if themsg.reciever = eu
   getMessage(themsg.text, themsg.username);
   
 })
@@ -44,7 +45,7 @@ form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   if (input.value) {
-    let msgObj = JSON.stringify(formatMessage(clientData.username, input.value,clientData.userID))
+    let msgObj = JSON.stringify(formatMessage(clientData.username, input.value,clientData.userID)) // + id ul aluia 
    // console.log("ClientData Test: " + clientData.username + clientData.userID)
     ws.send(msgObj)
     //ws.send(input.value);
@@ -148,7 +149,7 @@ function login() {
       usernameReg = JSON.parse(resp).name;
       clientData.userID = JSON.parse(resp).id;
       clientData.username = JSON.parse(resp).name;
-      console.log("Just got  the user id" + clientData.userID)
+     // console.log("Just got  the user id" + clientData.userID)
       // e ok
 
     } else if (this.readyState === 4 && this.status === 500) {
@@ -163,7 +164,7 @@ function login() {
 return 0;
 }
 
-function getPrevMsg() {
+function getPrevMsg(someUserId) { // + data din bd 
   
   const urlMessage1 = "http://localhost:5000/api/messages?email="+email;
   var request = new XMLHttpRequest();
@@ -183,11 +184,12 @@ function getPrevMsg() {
         
         sideBarUserObj.username = element.fromUserId;
         sideBarUserObj.lastMsg = element.content;
-        getMessage(element.content, element.fromUserId);
+        if(element.fromUserId == someUserId)
+          getMessage(element.content, element.fromUserId);
 
         if(!sideBarUsers.some(elem => elem.username === element.fromUserId)){
           sideBarUsers.push(sideBarUserObj);
-          addSidebarUser("User " + element.fromUserId);
+          addSidebarUser(sideBarUserObj);
         }
 
       }
@@ -209,14 +211,14 @@ function formatMessage(username, text,id) {
   }
 }
 
-function addSidebarUser(username)
+function addSidebarUser(user)
 {
   var theList = document.getElementById('sidebarList');
   var theRMsg = document.createElement('p');
   var item = document.createElement('li');
   var userParagraph = document.createElement('p');
-  userParagraph.id = username;
-  userParagraph.textContent = username;
+  userParagraph.id = user.username;
+  userParagraph.textContent = user.username;
   var profilePic = document.createElement('img');
   profilePic.src="ProfilePic.png";
   profilePic.style="display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;";
@@ -224,14 +226,13 @@ function addSidebarUser(username)
   item.appendChild(profilePic);
   theList.appendChild(item);
   theRMsg.id = "rec-msg";
-  theRMsg.textContent="Un mesaj recent";
+  theRMsg.textContent=user.lastMsg;
   item.appendChild(userParagraph);
   item.appendChild(theRMsg);
-  item.onclick = ()=>{console.log("am apasat pe " + username); sendTo = username}
-  sideBarUserObj = {
+  item.onclick = ()=>{console.log("am apasat pe " + user.username); sendTo = user.username; getPrevMsg(user.username)}
+ /* sideBarUserObj = {
     username: username,
     lastMsg: theRMsg
-  }
+  }*/
 
 }
-
