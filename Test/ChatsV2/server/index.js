@@ -29,19 +29,19 @@ getUsersList();
 
         let themsg = JSON.parse(data.toString());
 
-        console.log("CHECK MY DATA ON MSG: " + themsg.username + ", " + themsg.id + themsg.text);
+        console.log("CHECK MY DATA ON MSG: " + themsg.username + ", " + themsg.id + themsg.text + themsg.reciever);
         ws.id = themsg.id;
         ws.username = themsg.username;
-        broadcast(ws.id, ws.username, themsg.text);
+        broadcast(ws.id, ws.username, themsg.text, themsg.reciever);
         lastMsg = themsg.text;
-        console.log("MAYBE IT WORKS " + lastMsg);
+        //console.log("MAYBE IT WORKS " + lastMsg);
     })
 
 
 });
 
-function broadcast(idnu,userPram,data) {
-    let msgObj = JSON.stringify(formatMessage(userPram,data))
+function broadcast(idnu,userPram,data,reciever) {
+    let msgObj = JSON.stringify(formatMessage(userPram,data,reciever))
 
     wss.clients.forEach(client => {
         if (client.id != idnu)
@@ -78,14 +78,14 @@ function broadcast(idnu,userPram,data) {
                     if(!clientslist.some(elem => elem.id === apiResp[size -1].fromUserId)) // si nu e de pe chatul mare
                     {
                         console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
-                        broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content);
+                        broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
                         popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
                     }
             }else{
              if(!popUpClientsList.some(elem => elem.msgId === apiResp[size -1].id))
              {
                 console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
-                broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content);
+                broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
                 popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
                 
              }
@@ -138,10 +138,11 @@ function getUsersList()
 
 }
 
-  function formatMessage(username, text)
+  function formatMessage(username, text, reciever)
   {
     return{
       username,
-      text
+      text,
+      reciever
     }
   }
