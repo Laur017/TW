@@ -11,6 +11,9 @@
 </body>
 <script>
     window.onload = function () {
+
+       
+
   var faScript = document.createElement("link");
   faScript.href =
     "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
@@ -43,11 +46,12 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     var msgToSend = document.getElementById("msgVal");
-    sendMessage(msgToSend.textContent);
+    //console.log(msgToSend.value)
+    sendMessage(msgToSend.value);
     getResponse();
   });
 
-  
+  setInterval( function(){  checkMsg(); },1000);
 
   var chatHeader = document.createElement("div");
   chatHeader.className = "chatHeader";
@@ -211,8 +215,10 @@ border-radius: 5px;
     request.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 201) {
         let resp = request.response
-        localStorage.setItem("name", resp)
-        console.log(localStorage.getItem("name"))
+        localStorage.setItem("email", resp)
+        console.log(localStorage.getItem("email"))
+        
+        
         // e ok
 
       } else if (this.readyState === 4 && this.status === 500) {
@@ -233,6 +239,9 @@ border-radius: 5px;
 
 var username;
 var count = 0;
+var myData ={
+    id:-1
+}
 
 function openForm() {
   console.log("ok");
@@ -251,7 +260,6 @@ function sendMessage(theMsg) {
   var textBox = document.createElement("div");
   textBox.textContent = inputVal.value;
   textBox.id = "testMsgStyle";
-  if (count === 0) username = inputVal;
 
   item.appendChild(textBox);
   item.scrollTo(0, 10000);
@@ -262,8 +270,10 @@ function sendMessage(theMsg) {
 
    request.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 201) {
-        console.log(request.response)
-      
+        console.log(request.response);
+        apiResp = JSON.parse( request.responseText);
+        myData.id = apiResp.fromUserID;
+        
         // e ok
 
       } else if (this.readyState === 4 && this.status === 404) {
@@ -272,7 +282,7 @@ function sendMessage(theMsg) {
     });
 
     let data = JSON.stringify({
-      from : localStorage.getItem("name"),
+      from : localStorage.getItem("email"),
       to: "ss@ss",
       content: theMsg
     })
@@ -284,12 +294,12 @@ function sendMessage(theMsg) {
 
 }
 
-function getResponse() {
-  var response = "Hello from ChatBot, " + username.value + "!";
+function getResponse(respMsg) {
+  //var response = "Hello from ChatBot, " + username.value + "!";
 
   var item = document.getElementById("test");
   var textBox = document.createElement("div");
-  textBox.textContent = response;
+  textBox.textContent = respMsg;
   textBox.id = "testMsgStyleServer";
 
   item.appendChild(textBox);
@@ -307,6 +317,40 @@ function askName() {
   item.appendChild(textBox);
   item.scrollTo(0, 10000);
 }
+var MsgIGot = [];
+function checkMsg()
+{
+    //var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
+    var request = new XMLHttpRequest();
+    var apiResp;
+    justUrl = "http://localhost:5000/api/messages?email="+localStorage.getItem("email");
+    console.log("inchemmsg")
+    request.onreadystatechange = function()
+    {
+        
+        if(request.readyState == 4)
+        {
+            apiResp = JSON.parse( request.responseText);
+            //console.log(apiResp)
+        }
+
+        apiResp.forEach(element => {
+            if(element.fromUserId != myData.id){
+            if(!MsgIGot.some(elem => elem === element.id))
+            {
+                console.log(element.content );
+                MsgIGot.push(element.id);
+                getResponse(element.content)
+            }
+        }
+        });
+        console.log(MsgIGot)
+    
+    }
+    request.open("GET", justUrl, true);
+    request.send();
+}
+
 
 </script>
 </html>
