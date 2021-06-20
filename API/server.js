@@ -28,7 +28,6 @@ const server = http.createServer((req, res) => {
     if (route === "login") login(req, res);
     else if (route === "register") register(req, res);
     else {
-      let route = route.split("?")[0];
       if (route === "activateCode") sendActivationCode(req, res);
       else if (route === "resetPasswordCode") sendResetCode(req, res);
       else if (route === "activate") checkActivationCode(req, res);
@@ -38,7 +37,11 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ message: "Not found" }));
       }
     }
-  } else if (req.url.split("?")[0] === "/api/users" && req.method == "GET" && req.url.split("?email=").length==2) {
+  } else if (
+    req.url.split("?")[0] === "/api/users" &&
+    req.method == "GET" &&
+    req.url.split("?email=").length == 2
+  ) {
     //USERS
     const email = req.url.split("?email=")[1];
     getUser(req, res, email);
