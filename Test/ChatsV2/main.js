@@ -41,6 +41,7 @@ ws.addEventListener("message", data => {
 
   if (themsg.reciever === clientData.userID || themsg.reciever === -23)
   getMessage(themsg.text, themsg.username);
+  // in plus, cand primesc mesaj, daca nu e, sa-l adaug in bara aia din stanga-----------------------------------------------> TODO
   
 })
 
@@ -86,7 +87,7 @@ function sendMessage(theMsg, autor) {
   item.classList.add("hismessage");
   var textSender = document.createElement('p');
   textSender.classList.add("meta");
-  textSender.textContent = "USER" + autor;
+  textSender.textContent = autor;
   item.appendChild(textSender)
   var MsgDateString = document.createElement('span');
   MsgDateString.textContent = " " + MyGetTime();
@@ -133,6 +134,7 @@ function getMessage(theMsg, autor) {
   item.appendChild(actualMsg);
   actualMsg.textContent = theMsg;
   window.scrollTo(0, Number.MAX_VALUE);
+  
 
 }
 

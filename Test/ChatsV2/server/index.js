@@ -78,14 +78,15 @@ function broadcast(idnu,userPram,data,reciever) {
                     if(!clientslist.some(elem => elem.id === apiResp[size -1].fromUserId)) // si nu e de pe chatul mare
                     {
                         console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
-                        broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
-                        popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
+                        //broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
+                        popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id, clientName: apiResp[size-1].content});
                     }
             }else{
              if(!popUpClientsList.some(elem => elem.msgId === apiResp[size -1].id))
              {
+                 objWithName = popUpClientsList.find(elem => elem.id === apiResp[size-1].fromUserId)
                 console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
-                broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
+                broadcast(-1, "[CHAT MIC]: " +apiResp[size -1].fromUserId + objWithName.clientName,apiResp[size-1].content,-23);
                 popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
                 
              }

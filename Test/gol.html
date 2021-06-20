@@ -48,7 +48,7 @@
     var msgToSend = document.getElementById("msgVal");
     //console.log(msgToSend.value)
     sendMessage(msgToSend.value);
-    getResponse();
+    
   });
 
   setInterval( function(){  checkMsg(); },1000);
@@ -240,6 +240,7 @@ border-radius: 5px;
 var username;
 var count = 0;
 var myData ={
+    username:null,
     id:-1
 }
 
@@ -260,6 +261,8 @@ function sendMessage(theMsg) {
   var textBox = document.createElement("div");
   textBox.textContent = inputVal.value;
   textBox.id = "testMsgStyle";
+  if (myData.username == null)
+  myData.username = inputVal.value;
 
   item.appendChild(textBox);
   item.scrollTo(0, 10000);
@@ -324,10 +327,10 @@ function checkMsg()
     var request = new XMLHttpRequest();
     var apiResp;
     justUrl = "http://localhost:5000/api/messages?email="+localStorage.getItem("email");
-    console.log("inchemmsg")
+    
     request.onreadystatechange = function()
     {
-        
+        //console.log("My name: " + myData.username)
         if(request.readyState == 4)
         {
             apiResp = JSON.parse( request.responseText);
