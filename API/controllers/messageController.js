@@ -69,23 +69,48 @@ async function createMessage(req, res) {
     const body = await getPostData(req);
 
     const { from, to, content } = JSON.parse(body);
-  
 
-    const user1= await User.get(from)
-    const user2= await User.get(to)
+    if (!(to && from && content)){
+       res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(
+        JSON.stringify({
+          message: "Incomplete request body",
+        })
+      );
+    }
 
-    if (!user1 || !user2){
+    let fromUserID;
+    let toUserID;
+    
+    if (isNaN(from)){
+      const user= await User.get(from);
+      fromUserID=user.id;
+     } else
+      fromUserID = from;
+    if (isNaN(to)){
+      const user= await User.get(to);
+      toUserID=user.id;
+     } else
+      toUserID = to;
+
+    if (!fromUserID || !toUserID){
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "Users not found" }));
     }
     
     const message = {
-      fromUserID: user1.id,
-      toUserID: user2.id,
+      fromUserID,
+      toUserID,
       content,
     };
 
     const newMessage = await Message.create( message);
+    if (!newMessage){
+      res.writeHead(404, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Users not found" }));
+      
+    }
+    
     res.writeHead(201, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(newMessage));
   } catch (error) {

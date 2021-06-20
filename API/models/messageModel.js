@@ -58,9 +58,8 @@ function create(message) {
     let query = `INSERT INTO messages (fromUserID, toUserID, content) values(${
       message.fromUserID
     }, ${message.toUserID}, '${message.content}')`;
-    
     con.query(query, function (err, result, fields) {
-      if (err) throw err;
+      if (err) {return resolve();}
       resolve(message);
     });
   });

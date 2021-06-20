@@ -12,19 +12,27 @@ async function login(req, res) {
       password,
     };
 
+    if (!email || !password) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({
+          message: "Email or password missing from the request body",
+        })
+      );
+    }
     const response = await User.login(user);
 
     if (!response) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "User not found" }));
     } else {
-
-      const user2= await User.get(email)
+      const user2 = await User.get(email);
       res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(user2));
+      res.end(JSON.stringify(user2));
     }
   } catch (error) {
-    console.log(error);
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
   }
 }
 
@@ -32,9 +40,16 @@ async function register(req, res) {
   try {
     const body = await getPostData(req);
     let user;
-
     if (body) {
       const { email, password, type } = JSON.parse(body);
+      if (!(email && password && type)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(
+          JSON.stringify({
+            message: "Email or password or type missing from the request body",
+          })
+        );
+      }
       user = {
         email,
         password,
@@ -55,10 +70,11 @@ async function register(req, res) {
       res.end(JSON.stringify({ message: "Internal server error" }));
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end(user.email);
+      res.end(user.email);
     }
   } catch (error) {
-    console.log(error);
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
   }
 }
 
@@ -66,6 +82,12 @@ async function sendActivationCode(req, res) {
   try {
     const body = await getPostData(req);
     const { email } = JSON.parse(body);
+    if (!email) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({ message: "Email missing from the request body" })
+      );
+    }
 
     let existingUser = await User.get(email);
 
@@ -82,17 +104,25 @@ async function sendActivationCode(req, res) {
       res.end(JSON.stringify({ message: "Internal server error" }));
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end("Code sent");
+      res.end(JSON.stringify({ message: "Activation code sent" }));
     }
   } catch (error) {
-    console.log(error);
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
   }
 }
 
 async function sendResetCode(req, res) {
   try {
     const body = await getPostData(req);
+
     const { email } = JSON.parse(body);
+    if (!email) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({ message: "Email missing from the request body" })
+      );
+    }
 
     let existingUser = await User.get(email);
 
@@ -109,10 +139,11 @@ async function sendResetCode(req, res) {
       res.end(JSON.stringify({ message: "Internal server error" }));
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end("Code sent");
+      res.end(JSON.stringify({ message: "Reset password code sent" }));
     }
   } catch (error) {
-    console.log(error);
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
   }
 }
 
@@ -124,7 +155,7 @@ async function getUser(req, res, email) {
     return;
   } else {
     res.writeHead(201, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(user));
+    res.end(JSON.stringify(user));
   }
 }
 
@@ -140,13 +171,19 @@ async function checkCode(req, res, type) {
   try {
     const body = await getPostData(req);
     const { email, code } = JSON.parse(body);
+    if (!(email && code)) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({
+          message: "Email or code missing from the request body",
+        })
+      );
+    }
 
     if (isNaN(code)) {
       res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: "Wrong code" }));
-      return;
+      return res.end(JSON.stringify({ message: "Wrong code" }));
     }
-    let response;
     if (type == "reset") response = await User.checkResetCode(email, code);
     else response = await User.checkActivationCode(email, code);
 
@@ -155,10 +192,11 @@ async function checkCode(req, res, type) {
       res.end(JSON.stringify({ message: "Wrong code" }));
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
-      return res.end("Activated");
+      res.end(JSON.stringify({ message: "Correct code" }));
     }
   } catch (error) {
-    console.log(error);
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
   }
 }
 

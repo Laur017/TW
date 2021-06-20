@@ -6,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Denumirea</title>
+    <title>ReSC</title>
     <link rel="icon" href="../../Assets/logo2.png" type="image/x-icon" />
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../chatApp/Pages/style.css" />
     <link rel="stylesheet" href="download_page.css" />
     <script src="./server/chatScript.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -19,7 +19,7 @@
 <body>
     <div class="header nav" id="header">
         <div class="navbar-wrapper">
-            <h2>Denumirea</h2>
+            <h2>ReSC</h2>
             <nav role="navigation" id="navigation">
                 <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
                     <i class="fa fa-bars"></i>
@@ -33,21 +33,23 @@
         </div>
     </div>
     <div class="space">
-        <img src="../../Assets/logo-circle.png" alt="logo" />
+        <img src="../Scholary/send.png" alt="logo" />
         <h2>Configure the download</h2>
 
         <form onsubmit="onDownload(event)">
-            <label for="color">Choose a color:</label>
+            <label for="color"></label>
 
-            <select name="color" id="color">
+            <select name="color" id="color" >
+                <option value="">Choose a color :</option>
                 <option value="Red">Red</option>
                 <option value="Yellow">Yellow</option>
                 <option value="Blue">Blue</option>
             </select>
 
-            <label for="position">Choose a position:</label>
+            <label for="position"></label>
 
             <select name="position" id="position">
+                <option value="">Choose a position :</option>
                 <option value="left">Bottom-left</option>
                 <option value="right">Botton-right</option>
             </select>
