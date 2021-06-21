@@ -32,14 +32,14 @@ function onLogin(event) {
 
   let user = {
     email: event.target.elements.email.value,
-    password: event.target.elements.password.value,
+    password:  event.target.elements.password.value,
   };
 
   request.addEventListener("readystatechange", function () {
     if (this.readyState === 4 && this.status === 200) {
       localStorage.setItem("email", user.email)
-	  localStorage.setItem("password", user.password);
-      window.location.href = "../Chat/chat.html";
+      localStorage.setItem("password", user.password);
+      window.location.href = "../ChatsV2/chats.html";
     } else if (this.readyState === 4 && this.status === 404) {
       if (document.getElementById("not-found") == null) {
         let login = document.getElementsByClassName("login")[0];
