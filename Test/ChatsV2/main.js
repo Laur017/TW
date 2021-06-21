@@ -171,7 +171,7 @@ return 0;
 
 function getPrevMsg(someUserId) { // + data din bd 
  
-  const urlMessage1 = "http://localhost:5000/api/messages?id="+email;
+  const urlMessage1 = "http://localhost:5000/api/messages?email="+email;
   var request = new XMLHttpRequest();
   
   removeMessages();
@@ -211,7 +211,7 @@ function getPrevMsg(someUserId) { // + data din bd
 
 function getUsername(Id)
 {
-  const urlMessage2 = "http://localhost:5000/api/users?email="+email;
+  const urlMessage2 = "http://localhost:5000/api/users?id="+email;
   var request2 = new XMLHttpRequest();
   var toReturn
   request2.addEventListener("readystatechange", function (){

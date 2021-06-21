@@ -1,20 +1,24 @@
 const socket = require("ws");
 const wss = new socket.Server({port: 3000});
 var clientslist = [];
+var popUpClientsList = [];
+var oldUsrList = [];
 
 
 const urlMessage = "http://localhost:5000/api/messages";
 var lastMsg;
 
-// get
 
 wss.on ("connection", ws =>{ 
+   
+    console.log(ws.username + " connected!");
+
     clientslist.push(ws);
-    ws.id = 23;
-    console.log("Client connected!" + ws.id);
-    
-   if(lastMsg)
-       setInterval( function(){ checkPopupChatMsg(lastMsg);}, 1000);
+  
+getUsersList();
+    // client list are doua bucati(vad daca vb intre ei si trimit la toata lumea), sau una(trimit lui)
+   //tin cont de usr chat mic si daca mai trimite ceva
+       setInterval( function(){ checkPopupChatMsg();}, 1000);
        
     ws.on("close", () =>{
 
@@ -25,28 +29,33 @@ wss.on ("connection", ws =>{
 
         let themsg = JSON.parse(data.toString());
 
-        console.log(themsg.username);
-        broadcast(themsg.text);
+        console.log("CHECK MY DATA ON MSG: " + themsg.username + ", " + themsg.id + themsg.text + themsg.reciever);
+        ws.id = themsg.id;
+        ws.username = themsg.username;
+        broadcast(ws.id, ws.username, themsg.text, themsg.reciever);
         lastMsg = themsg.text;
-        //console.log("LastMsg: " + lastMsg);
+        //console.log("MAYBE IT WORKS " + lastMsg);
     })
 
 
 });
 
-function broadcast(data) {
-    let msgObj = JSON.stringify(formatMessage("noUserForNow",data))
+function broadcast(idnu,userPram,data,reciever) {
+    let msgObj = JSON.stringify(formatMessage(userPram,data,reciever))
 
-    wss.clients.forEach(client => client.send(msgObj));
+    wss.clients.forEach(client => {
+        if (client.id != idnu)
+            client.send(msgObj)
+        
+        }
+    );
+    
+    
     
   };
 
-  function addUser()
-  {
-      
-  }
 
-  function checkPopupChatMsg(msgToCmp)
+  function checkPopupChatMsg()
 {
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
     var request = new XMLHttpRequest();
@@ -55,17 +64,35 @@ function broadcast(data) {
     request.onreadystatechange = function()
     {
         if(request.readyState == 4)
-        {        
-          //  console.log(request.responseText);   
+        {
             apiResp = JSON.parse( request.responseText);
             apiResp.forEach(element => {
-                //console.log("The message: " + element.content);
+                
                 size++;
               });
-            //console.log("nr of msg:" + size)
-            //console.log("ultimul mesaj: " + apiResp[size-1].content);
-            if(apiResp[size-1].content != msgToCmp)
-            broadcast(lastMsg);
+              //  console.log("nr of msg:" + size)
+              //  console.log("ultimul mesaj: " + apiResp[size-1].content);
+            if(!popUpClientsList.some(elem => elem.id === apiResp[size -1].fromUserId)){ // daca nu e din chatul mic(salvat)
+                //oldclients
+                if(!oldUsrList.some(elem => elem.id === apiResp[size -1].fromUserId ))
+                    if(!clientslist.some(elem => elem.id === apiResp[size -1].fromUserId)) // si nu e de pe chatul mare
+                    {
+                        console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
+                        //broadcast(-1, "[CHAT MIC]" +apiResp[size -1].fromUserId,apiResp[size-1].content,-23);
+                        popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id, clientName: apiResp[size-1].content});
+                    }
+            }else{
+             if(!popUpClientsList.some(elem => elem.msgId === apiResp[size -1].id))
+             {
+                 objWithName = popUpClientsList.find(elem => elem.id === apiResp[size-1].fromUserId)
+                console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
+                broadcast(-1, "[CHAT MIC]: " +apiResp[size -1].fromUserId + objWithName.clientName,apiResp[size-1].content,-23);
+                popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
+                
+             }
+             popUpClientsList.forEach(element => console.log("POPUPCLIENT: " + element.id))
+            }
+            
         }
     }
 
@@ -73,11 +100,50 @@ function broadcast(data) {
     request.send();
 }
 
+function getUsersList()
+{
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; 
+    var request = new XMLHttpRequest();
+    var apiResp;
 
-  function formatMessage(username, text)
+    request.onreadystatechange = function()
+    {
+        if(request.readyState == 4)
+        {
+          
+          //  console.log(request.responseText);   
+            apiResp = JSON.parse( request.responseText);
+            apiResp.forEach(element => {
+
+                if(!oldUsrList.some(elem => elem.id === element.fromUserId)){
+
+                    oldUsrList.push({id : element.fromUserId});
+                    //console.log( "unul dintre id uri: " + element.fromUserId)
+                
+                }
+
+                if(!oldUsrList.some(elem => elem.id === element.toUserId)){
+
+                    oldUsrList.push({id : element.toUserId});
+                    //console.log( "unul dintre id uri: " + element.fromUserId)
+                
+                }
+
+              });
+            
+        }
+        //oldUsrList.forEach(element => console.log("OldList: " + element.id))
+    }
+    request.open("GET", urlMessage, true);
+    request.send();
+
+}
+
+  function formatMessage(username, text, reciever)
   {
     return{
       username,
-      text
+      text,
+      reciever
     }
   }
