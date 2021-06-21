@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReSC</title>
+  <link rel="icon" href="../../chatApp/Assets/logo2.png" type="image/x-icon" />
+  <link rel="stylesheet" href="./activate_account.css" />
+  <link rel="stylesheet" href="../style.css">
+  <script src="activate_account.js"></script>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="header nav" id="header">
+    <div class="navbar-wrapper">
+      <h2>ReSC</h2>
+      <nav role="navigation" id="navigation">
+        <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
+          <i class="fa fa-bars"></i>
+        </a>
+        <ul id="links" class="navLinks">
+          <li><a href="../Login/login.html">Login</a></li>
+          <li><a href="../ActivateAccount/activate_account.html">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="activate_account">
+   
+    <div class="second_part">
+      <div class="act">Activate your account</div>
+      <form class="account_activate" onsubmit="formSubmit(event)">
+
+        <input type="text" name="User" placeholder="UserID" required /><br />
+        <input type="email" name="email" placeholder="Email" required /><br />
+        <div class="upload-btn-wrapper">
+          <button class="btn">Upload your image</button>
+          <input type="file" name="myfile" class="alupigus" required/><br/>
+          <img src="" id="myImg" width="100" height="100" style="display: none" onload="this.style.display=''"><br/><br/><br/>
+        </div>
+  
+     
+
+
+        <div id="accountActive" class="hidden">Your account is already active!</div>
+        <div id="activationCode" class="hidden">
+          <input name="code" id="activationCodeInput" disabled type="text" placeholder="Activation code" required />
+          <div id="invalidCode" class="hidden">Invalid code!</div>
+          <button type="submit" >Sign up</button>
+        </div>
+        <button id="submitEmailButton" name="submitEmailButton" type="submit">Send the code</button>
+      </form>
+      <div class="cal">
+        You already have an account ?<a href="../Login/login.html" class="footter">Login here</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('load',function(){
+
+
+      document.querySelector('input[type="file"]').addEventListener('change',function(){
+      if(this.files && this.files[0]){
+      
+
+      var img = document.querySelector('img');
+
+      img.src=URL.createObjectURL(this.files[0]);
+
+        
+
+        
+      }
+    });
+});
+
+
+
+  </script>
+</body>
+
+</html>
