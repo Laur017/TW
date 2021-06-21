@@ -29,7 +29,8 @@ sideBarUserObj = {
 
 
 ws.addEventListener("open", () => {
-  console.log("We connected!" + "test " + getUsername(5));
+  console.log("We connected!");
+  getUsername(5);
  
   login();
   getPrevMsg();
@@ -211,13 +212,14 @@ function getPrevMsg(someUserId) { // + data din bd
 
 function getUsername(Id)
 {
-  const urlMessage2 = "http://localhost:5000/api/users?id="+email;
+  const urlMessage2 = "http://localhost:5000/api/users?id="+Id;
   var request2 = new XMLHttpRequest();
   var toReturn
   request2.addEventListener("readystatechange", function (){
     var apiResp2;
     if (this.readyState == 4) {
-       console.log(request2.responseText); 
+       console.log( "user data in getUsrname" +request2.responseText); 
+       
      
     }
   })

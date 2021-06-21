@@ -16,8 +16,7 @@ wss.on ("connection", ws =>{
     clientslist.push(ws);
   
 getUsersList();
-    // client list are doua bucati(vad daca vb intre ei si trimit la toata lumea), sau una(trimit lui)
-   //tin cont de usr chat mic si daca mai trimite ceva
+    
        setInterval( function(){ checkPopupChatMsg();}, 1000);
        
     ws.on("close", () =>{
@@ -34,14 +33,14 @@ getUsersList();
         ws.username = themsg.username;
         broadcast(ws.id, ws.username, themsg.text, themsg.reciever);
         lastMsg = themsg.text;
-        //console.log("MAYBE IT WORKS " + lastMsg);
+        
     })
 
 
 });
 
 function broadcast(idnu,userPram,data,reciever) {
-    let msgObj = JSON.stringify(formatMessage(userPram,data,reciever))
+    let msgObj = JSON.stringify(formatMessage(idnu,userPram,data,reciever))
 
     wss.clients.forEach(client => {
         if (client.id != idnu)
@@ -139,9 +138,10 @@ function getUsersList()
 
 }
 
-  function formatMessage(username, text, reciever)
+  function formatMessage(userId,username, text, reciever)
   {
     return{
+      userId,
       username,
       text,
       reciever
