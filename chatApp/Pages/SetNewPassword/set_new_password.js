@@ -33,8 +33,10 @@ function submitForm(event){
     const password = event.target.elements.password.value;
     const confirmPassword =  event.target.elements.confirmPassword.value;
 
-    if (password!==confirmPassword)
+    if (password!==confirmPassword){
     document.getElementById("differentPasswords").classList.remove("hidden")
+    return;
+    }
     
     let body = JSON.stringify( {
         "email": localStorage.getItem("email"),

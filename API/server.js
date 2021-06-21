@@ -40,11 +40,11 @@ const server = http.createServer((req, res) => {
   } else if (
     req.url.split("?")[0] === "/api/users" &&
     req.method == "GET" &&
-    req.url.split("?email=").length == 2
+    req.url.split("?id=").length == 2
   ) {
     //USERS
-    const email = req.url.split("?email=")[1];
-    getUser(req, res, email);
+    const id = req.url.split("?id=")[1];
+    getUser(req, res, id);
   } else {
     //MESSAGES
 

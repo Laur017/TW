@@ -147,8 +147,8 @@ async function sendResetCode(req, res) {
   }
 }
 
-async function getUser(req, res, email) {
-  let user = await User.get(email);
+async function getUser(req, res, id) {
+  let user = await User.get(id);
   if (!user) {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: "User doesn't exist" }));

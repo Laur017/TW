@@ -7,6 +7,8 @@ emailInput.onclick =() => {console.log(emailInput.value); sendTo = emailInput.va
 var messages = document.getElementById('tryid');
 var usernameReg;
 
+var language = "es";
+
 
 var email = localStorage.getItem("email");
 var password = localStorage.getItem("password")
@@ -169,7 +171,7 @@ return 0;
 
 function getPrevMsg(someUserId) { // + data din bd 
  
-  const urlMessage1 = "http://localhost:5000/api/messages?email="+email;
+  const urlMessage1 = "http://localhost:5000/api/messages?id="+email;
   var request = new XMLHttpRequest();
   
   removeMessages();

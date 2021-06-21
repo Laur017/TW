@@ -44,9 +44,12 @@ function getAll() {
   });
 }
 
-function get(email) {
+function get(id) {
   return new Promise((resolve, reject) => {
-    let query = `SELECT id, email, name, type FROM users where email = "${email}"`;
+    let query;
+    if (isNaN(id))
+      query = `SELECT id, email, name, type FROM users where email = "${id}"`; else 
+      query = `SELECT id, email, name, type FROM users where id = "${id}"`;
     con.query(query, function (err, result, fields) {
       if (err) throw err;
       if (result.length !== 0) {
