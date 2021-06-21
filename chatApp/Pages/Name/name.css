@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css');
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.header a:hover {
+  color: #71926c;
+}
+
+.header li {
+  color: rgb(39, 39, 39);
+}
+
+.header li a {
+  color: rgb(55, 55, 55);
+}
+
+.header li:hover {
+  color: #71926c;
+}
+
+.header ul li:hover > ul,
+ul li ul:hover {
+  color: #71926c;
+}
+
+.activate_account {
+  margin-left: 500px;
+  margin-right: 500px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  text-align: center;
+}
+img{
+  margin-top: 20px;
+  margin-left: center;
+}
+.activate_account > .second_part {
+  
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.cal {
+  margin-bottom: 20px;
+}
+
+.act {
+  color: #71926c;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.account_activate{
+  font-size: larger;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.account_activate input {
+  font-size:18px;
+  border: none;
+  border-bottom: 1px solid #71926c;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+.account_activate ::placeholder {
+  color: gray;
+  font-size: 1rem;
+}
+.account_activate input:focus {
+  border: none;
+}
+
+#submitEmailButton {
+  padding: 16px 32px;
+  border-radius: 25px;
+  background-color: #71926c;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: serif;
+  font-weight: bold;
+  margin-top: 70px;
+  margin-left: px;
+}
+
+.hidden{
+  display: none;
+}
+
+.footter {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-left: 1%;
+  text-decoration: none;
+  color: #71926c;
+}
+
+/* .footer a {
+        text-decoration: none;
+        color: #71926C;
+      } */
+@media (max-width: 777px) {
+       .activate_account > img {
+    display: none;
+  }
+}
+
+
+
+
+.upload-btn-wrapper {
+  margin-top: 10px;
+  margin-left: -10px;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid #71926c;
+  color: #71926c;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+/*.lang-menu {
+
+  margin-left: 375px;
+  color: #71926c;
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: 25px;
+  position: relative;
+}
+.lang-menu .selected-lang {
+  color: #71926c;
+  display: flex;   
+  justify-content: space-between;
+  line-height: 2;
+  cursor: pointer;
+}
+.lang-menu .selected-lang:before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.lang-menu ul {
+  color: #71926c;
+  margin: 0;
+  padding: 0;
+  display: none;
+  background-color: #fff;
+  border: 1px solid #f8f8f8;
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  width: 125px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+}
+
+
+.lang-menu ul li {
+  color: #71926c;
+  list-style: none;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lang-menu ul li a {
+  color: #000000;
+  text-decoration: none;
+  width: 125px;
+  padding: 5px 10px;
+  display: block;
+}
+
+.lang-menu ul li:hover {
+  background-color: #f2f2f2;
+}
+
+.lang-menu ul li a:before {
+  content: '';
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin-right: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.de:before {
+  background-image: url(https://www.countryflags.io/de/flat/32.png);
+}
+
+.en:before {
+  background-image: url(https://www.countryflags.io/us/flat/32.png);
+}
+.fr:before {
+  background-image: url(https://www.countryflags.io/fr/flat/32.png);
+}
+
+.ar:before {
+  background-image: url(https://www.countryflags.io/ae/flat/32.png);
+}
+
+
+.lang-menu:hover ul {
+  display: block;
+}
+*/
+#lang {
+  position:relative;
+  top:10px;
+    color:#71926C ;
+    font-size: medium;
+    border: white;
+    margin-left: -190px;
+    width: 180px;
+    height: 50px;
+}
