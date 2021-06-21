@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--     -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReSC</title>
+    <link rel="icon" href="../../Assets/logo2.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../chatApp/Pages/style.css" />
+    <link rel="stylesheet" href="download_page.css" />
+    <script src="./server/chatScript.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="header nav" id="header">
+        <div class="navbar-wrapper">
+            <h2>ReSC</h2>
+            <nav role="navigation" id="navigation">
+                <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul id="links" class="navLinks">
+                    <li><a href="#">Menu 1</a></li>
+                    <li><a href="#">Menu 2</a></li>
+                    <li><a href="#">Menu 3</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="space">
+        <img src="../Scholary/send.png" alt="logo" />
+        <h2>Configure the download</h2>
+
+        <form onsubmit="onDownload(event)">
+            <label for="color"></label>
+
+            <select name="color" id="color" >
+                <option value="">Choose a color :</option>
+                <option value="Red">Red</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Blue">Blue</option>
+            </select>
+
+            <label for="position"></label>
+
+            <select name="position" id="position">
+                <option value="">Choose a position :</option>
+                <option value="left">Bottom-left</option>
+                <option value="right">Botton-right</option>
+            </select>
+
+            <button type="submit">
+                DOWNLOAD <i class="fas fa-file-download"></i>
+            </button>
+        </form>
+        <script>
+            const ws = new WebSocket("ws://localhost:8882");
+            var positionHoriz, positionVert, color;
+            form = document.getElementById("select_color")
+            var scriptContent;
+
+            const downloadToFile = (content, filename, contentType) => {
+                const a = document.createElement('a');
+                const file = new Blob([content], { type: contentType });
+
+                a.href = URL.createObjectURL(file);
+                a.download = filename;
+                a.click();
+
+                URL.revokeObjectURL(a.href);
+            };
+
+
+
+            // sa zicem ca am luat valorile din form
+            positionVert = "bottom";
+
+            ws.addEventListener("open", () => {
+                console.log("We connected!");
+
+
+
+            })
+
+            ws.addEventListener("message", data => {
+                scriptContent = data.data;
+                //console.log("the script: "+ scriptContent);
+                downloadToFile(scriptContent, 'my-new-file.js', 'text/plain');
+
+            })
+
+
+            function onDownload(e) {
+
+                e.preventDefault();
+
+
+                let color = e.target.elements.color.value;
+                let positionHoriz = e.target.elements.position.value;
+                console.log(color)
+                console.log(positionHoriz)
+
+                ws.send(positionHoriz);
+                ws.send(positionVert);
+                ws.send(color);
+
+                ws.send("sendScript");
+
+
+
+            }
+        </script>
+
+</body>
+
+</html>
