@@ -80,6 +80,7 @@ window.onload = function () {
         * {box-sizing: border-box;}
 
 .open-button {
+ 
   background-color: #555;
   color: white;
   padding: 16px 20px;
@@ -101,8 +102,8 @@ window.onload = function () {
   position: fixed;
   PozVert: 0;
   PozOriz: 15px;
-  border: 3px solid #f1f1f1;
-  border-radius: 5px;
+  border: 3px solid #71926c;;
+  border-radius: 10px;
   z-index: 9;
 }
 
@@ -172,14 +173,14 @@ border-radius: 5px;
 }
 
 #testMsgStyleServer {
-  color: black;
+  color: white;
   width: 60%;
   float: right;
   position: relative;
   right: 15px;
 padding: 10px;
 margin-bottom: 15px;
-background-color: blue;
+background-color: #71926c;
 border-radius: 5px;
 }
 
