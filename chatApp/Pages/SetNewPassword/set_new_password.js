@@ -50,7 +50,7 @@ function submitForm(event){
 
     request.onreadystatechange = function () {
       if (this.readyState === 4 && this.status == 201) {
-        document.location.href = "../Login/login.html"
+        document.location.href = "../Profile/profile.html"
       } else if (this.readyState === 4 && this.status == 400) {
         document.getElementById("serverError").classList.remove("hidden")
         return
