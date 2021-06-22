@@ -20,7 +20,7 @@
     <div class="header nav" id="header">
         <div class="navbar-wrapper">
             <h2>ReSC</h2>
-            <nav role="navigation" id="navigation">
+            <nav id="navigation">
                 <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
                     <i class="fa fa-bars"></i>
                 </a>
@@ -58,6 +58,7 @@
                 DOWNLOAD <i class="fas fa-file-download"></i>
             </button>
         </form>
+        </div>
         <script>
             const ws = new WebSocket("ws://localhost:8882");
             var positionHoriz, positionVert, color;
