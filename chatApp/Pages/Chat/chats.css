@@ -1,6 +1,34 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 
+.nav{
+    margin-bottom: 10%;
+}
+
+.header a:hover {
+  color: #71926C;
+}
+
+
+.header li {
+  color: rgb(39, 39, 39) ;
+  
+}
+  
+.header li a {
+  color: rgb(55, 55, 55);
+}
+
+.header li:hover {
+   color: #71926C;
+}
+
+.header ul li:hover > ul,
+ul li ul:hover {
+  color: #71926C;
+}
+
+
 #rec-msg{
     font-size: 12px;
 	font-weight:lighter;

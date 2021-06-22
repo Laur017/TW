@@ -6,14 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="chats.css">
+    <link rel="stylesheet" href="../style.css">
     <title>ChatApp</title>
 </head>
 
 <body>
+    <div class="header nav" id="header">
+        <div class="navbar-wrapper">
+            <h2>ReSC</h2>
+            <nav id="navigation">
+                <a class="nav-minimized" id="dropdownButton" onclick="showDropdown()">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul id="links" class="navLinks">
+                    <li><a href="../Login/login.html">Login</a></li>
+                    <li><a href="../ActivateAccount/activate_account.html">Register</a></li>
+                    <li><a href="../Download/download_page.html">Download the script</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <div class="big-container">
-        <header class="chat-header">
-            <h1>RESC </h1>
-        </header>
+
+
 
         <main class="chat-main">
             <div class="chat-sidebar">
@@ -22,35 +37,11 @@
                 <div><textarea id="emailTextInput" placeholder="Enter an email here.."></textarea></div>
 
                 <ul id="sidebarList">
-                    <li><img src="ProfilePic.png"
-                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
-                        <p id="username">Ana</p>
-                        <p id="rec-msg">Ceva mesaj recent</p>
-
-                    </li>
-
-                    <li><img src="ProfilePic.png"
-                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
-                        Dana
-                        <p id="rec-msg">Ceva mesaj recent</p>
-                    </li>
-                    <li><img src="ProfilePic.png"
-                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
-                        Nana
-                        <p id="rec-msg">Ceva mesaj recent mai lung sa vedem cum se redimensioneaza</p>
-                    </li>
-                    <li><img src="ProfilePic.png"
-                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
-                        Lana
-                        <p id="rec-msg">Ceva mesaj recent</p>
-                    </li>
-
                     <li>
-                        <img src="ProfilePic.png"
-                            style=" display: flex; vertical-align: middle; width: 42px; float: left;  padding-right: 5px;" />
-                        Pana
-                        <p id="rec-msg">Ceva mesaj recent</p>
+
                     </li>
+
+
                 </ul>
             </div>
             <div class="chat-window">
@@ -109,7 +100,7 @@
                 <div class="form-container">
                     <form id="form">
                         <input id="amess" type="text" placeholder="Type a message" required autocomplete="off" />
-                        <input type="image" src="NobordrrDeloc.png" width="30px" alt="Submit Form" />
+                        <input type="image" src="../../Assets/logo-no-border.png" width="30px" alt="Submit Form" />
 
                     </form>
 
