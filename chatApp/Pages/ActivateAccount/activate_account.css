@@ -101,7 +101,7 @@ img{
   font-family: serif;
   font-weight: bold;
   margin-top: 70px;
-  margin-left: -195px;
+  margin-left: 0px;
 }
 
 .hidden{
@@ -130,28 +130,3 @@ img{
 
 
 
-.upload-btn-wrapper {
-  margin-top: 10px;
-  margin-left: -30px;
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.btn {
-  border: 2px solid #71926c;
-  color: #71926c;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
