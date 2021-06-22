@@ -18,6 +18,9 @@ function formSubmit(event) {
     dataForm.append("email", email);
     dataForm.append("avatar", imgUpload.files[0], "avatar" )
 
+    var lang = document.getElementsByClassName("goog-te-combo")[0];
+    localStorage.setItem("language", lang.options[lang.selectedIndex].value) 
+
 
     request.open("POST", url);
     request.send(dataForm);
