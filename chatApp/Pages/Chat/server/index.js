@@ -85,7 +85,7 @@ function broadcast(idnu,userPram,data,reciever) {
              {
                  objWithName = popUpClientsList.find(elem => elem.id === apiResp[size-1].fromUserId)
                 console.log("mesajul vine de la: " + apiResp[size -1].fromUserId + "si ar trebui sa-l trimit")
-                broadcast(-1, "[CHAT MIC]: " +apiResp[size -1].fromUserId + objWithName.clientName,apiResp[size-1].content,-23);
+                broadcast(apiResp[size -1].fromUserId, "[CHAT MIC]: " +apiResp[size -1].fromUserId + objWithName.clientName,apiResp[size-1].content,-23);
                 popUpClientsList.push({id: apiResp[size-1].fromUserId, msgId: apiResp[size-1].id});
                 
              }

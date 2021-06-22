@@ -22,7 +22,7 @@ var clientData={
 
 let sideBarUsers = [];
 sideBarUserObj = {
-  username:'nimeni',
+  username:'not set',
   userId:'',
   lastMsg:''
 }
@@ -30,7 +30,6 @@ sideBarUserObj = {
 
 ws.addEventListener("open", () => {
   console.log("We connected!");
-  getUsername(5);
  
   login();
   getPrevMsg();
@@ -44,7 +43,17 @@ ws.addEventListener("message", data => {
 
   if (themsg.reciever === clientData.userID || themsg.reciever === -23)
   getMessage(themsg.text, themsg.username);
+  console.log("test cu id prin mesaj:" + themsg.userId)
   // in plus, cand primesc mesaj, daca nu e, sa-l adaug in bara aia din stanga-----------------------------------------------> TODO
+  
+    if(!sideBarUsers.some(elem => elem.userId === themsg.userId)){
+      addSidebarUser({
+        username: themsg.username,
+        userId: themsg.userId,
+        lastMsg: themsg.text
+      })
+  }
+
   
 })
 
@@ -127,7 +136,7 @@ function getMessage(theMsg, autor) {
   item.classList.add("mymessage");
   var textSender = document.createElement('p');
   textSender.classList.add("meta");
-  textSender.textContent = "USER" + autor;
+  textSender.textContent =  autor;
   item.appendChild(textSender)
   var MsgDateString = document.createElement('span');
   MsgDateString.textContent = " " + MyGetTime();
@@ -190,15 +199,21 @@ function getPrevMsg(someUserId) { // + data din bd
         
         sideBarUserObj.userId = element.fromUserId;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //sideBarUserObj.username =??
+        getUsername(element.fromUserId);
+        
         
         sideBarUserObj.lastMsg = element.content;
         if(element.fromUserId == someUserId)
-          getMessage(element.content, element.fromUserId);
-
+        getMessage(element.content, sideBarUserObj.username);
+          setTimeout(()=>{
         if(!sideBarUsers.some(elem => elem.userId === element.fromUserId)){
-          sideBarUsers.push(sideBarUserObj);
+          
+            sideBarUsers.push(sideBarUserObj);
           addSidebarUser(sideBarUserObj);
+        
+          
         }
+      },1000)
       }
     });
 
@@ -214,11 +229,15 @@ function getUsername(Id)
 {
   const urlMessage2 = "http://localhost:5000/api/users?id="+Id;
   var request2 = new XMLHttpRequest();
-  var toReturn
+  //var toReturn
+  var apiResp2;
   request2.addEventListener("readystatechange", function (){
-    var apiResp2;
+    
     if (this.readyState == 4) {
-       console.log( "user data in getUsrname" +request2.responseText); 
+       apiResp2 = JSON.parse(request2.response);
+       console.log( "user name in getUsrname: " + apiResp2.name); 
+      sideBarUserObj.username = apiResp2.name
+      console.log("in get user name: " + sideBarUserObj.username);
        
      
     }
