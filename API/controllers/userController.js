@@ -1,6 +1,8 @@
-const { getPostData } = require("../utils");
+const { getPostData,getBoundary, getMatching } = require("../utils");
 const User = require("../models/userModel");
 var uuid = require("uuid");
+const path = require("path");
+const fs = require("fs");
 
 async function login(req, res) {
   try {
@@ -71,6 +73,83 @@ async function register(req, res) {
     } else {
       res.writeHead(201, { "Content-Type": "application/json" });
       res.end(user.email);
+    }
+  } catch (error) {
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Internal server error" }));
+  }
+}
+
+async function updateUser(req, res) {
+  
+  let fileFullPath = "";
+  try {
+    let result = {};
+    let rawData = await getPostData(req);
+    let boundary = getBoundary(req);
+    const rawDataArray = rawData.split(boundary);
+    for (let item of rawDataArray) {
+      // Use non-matching groups to exclude part of the result
+      let name = getMatching(item, /(?:name=")(.+?)(?:")/);
+      if (!name || !(name = name.trim())) continue;
+      let value = getMatching(item, /(?:\r\n\r\n)([\S\s]*)(?:\r\n--$)/);
+      if (!value) continue;
+      let filename = getMatching(item, /(?:filename=")(.*?)(?:")/);
+      if (filename && (filename = filename.trim())) {
+        // Add the file information in a files array
+        let file = {};
+        file[name] = value;
+        file["filename"] = filename;
+        let contentType = getMatching(item, /(?:Content-Type:)(.*?)(?:\r\n)/);
+        if (contentType && (contentType = contentType.trim())) {
+          file["Content-Type"] = contentType;
+        }
+        if (!result.files) {
+          result.files = [];
+        }
+        result.files.push(file);
+      } else {
+        // Key/Value pair
+        result[name] = value;
+      }
+    }
+
+
+
+    const userDb = await User.get(result.email);
+    if (!userDb) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Email not found" }));
+      return;
+    }
+
+    if (result.files) {
+      fileFullPath = path.resolve("avatars/" + uuid.v4() + ".jpg");
+      const stream = fs.createWriteStream(fileFullPath);
+      stream.write(result.files[0].avatar, "binary");
+      stream.close();
+      result.files[0].picture = "bin";
+    }
+
+
+    const data = {
+      email: result.email,
+      name: result.name,
+      avatar: fileFullPath
+    }
+
+
+
+
+
+    const user = await User.update(data);
+
+    if (!user) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "Internal server error" }));
+    } else {
+      res.writeHead(201, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(user));
     }
   } catch (error) {
     res.writeHead(500, { "Content-Type": "application/json" });
@@ -208,4 +287,5 @@ module.exports = {
   checkActivationCode,
   checkResetCode,
   getUser,
+  updateUser
 };

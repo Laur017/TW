@@ -24,10 +24,31 @@ function getPostData(req){
   })
 }
 
+function getBoundary(request) {
+  let contentType = request.headers['content-type']
+  const contentTypeArray = contentType.split(';').map(item => item.trim())
+  const boundaryPrefix = 'boundary='
+  let boundary = contentTypeArray.find(item => item.startsWith(boundaryPrefix))
+  if (!boundary) return null
+  boundary = boundary.slice(boundaryPrefix.length)
+  if (boundary) boundary = boundary.trim()
+  return boundary
+}
+
+function getMatching(string, regex) {
+  // Helper function when using non-matching groups
+  const matches = string.match(regex)
+  if (!matches || matches.length < 2) {
+    return null
+  }
+  return matches[1]
+}
 
 
 
 module.exports =  {
     writeData,
-    getPostData
+    getPostData,
+    getBoundary,
+    getMatching
 }

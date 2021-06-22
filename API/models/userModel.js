@@ -182,6 +182,22 @@ function checkResetCode(email, code) {
   });
 }
 
+function update(data) {
+
+  
+  return new Promise((resolve, reject) => {
+    
+    data.avatar = data.avatar.replace(/\\/g, "\\\\");
+    let query = `UPDATE users set avatar = "${data.avatar}", name = "${data.name}" where email = "${data.email}"`;
+    con.query(query, function (err, result, fields) {
+      if (err) {resolve(); throw err;}
+      else resolve(data);
+    });
+  });
+}
+
+
+
 module.exports = {
   login,
   get,
@@ -190,4 +206,5 @@ module.exports = {
   checkActivationCode,
   checkResetCode,
   register,
+  update
 };

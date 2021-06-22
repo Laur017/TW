@@ -14,6 +14,7 @@ const {
   checkResetCode,
   register,
   getUser,
+  updateUser
 } = require("./controllers/userController");
 
 const server = http.createServer((req, res) => {
@@ -37,15 +38,20 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ message: "Not found" }));
       }
     }
-  } else if (
+  } else if ( //USERS
     req.url.split("?")[0] === "/api/users" &&
     req.method == "GET" &&
     req.url.split("?id=").length == 2
   ) {
-    //USERS
+    
     const id = req.url.split("?id=")[1];
     getUser(req, res, id);
-  } else {
+  } else if (
+    req.url === "/api/users" &&
+    req.method == "POST" 
+  ) {
+    updateUser(req, res);
+  }else {
     //MESSAGES
 
     if (req.url === "/api/messages") {
