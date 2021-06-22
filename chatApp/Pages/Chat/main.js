@@ -1,6 +1,9 @@
 const ws = new WebSocket("ws://localhost:3000");
 var form = document.getElementById('form');
 var input = document.getElementById('amess');
+let language = localStorage.getItem("language")
+//test
+language="es"
 //var userID= Math.random() * 1000;
 //userID = userID.toPrecision(3);
 //let username = userID;
@@ -61,6 +64,7 @@ function MyGetTime() {
 }
 
 function sendMessage(theMsg, autor) {
+
   var request = new XMLHttpRequest();
 
   const urlMessage = "http://localhost:5000/api/messages";
@@ -88,6 +92,20 @@ function sendMessage(theMsg, autor) {
     }
   }
 
+  var APIrequest = new XMLHttpRequest();
+  const translateURL = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyDNjh1TCpYFSjP-LIt7qVkNhKDD3v5m3gs&q=${theMsg}&target=en`
+  APIrequest.open("GET", translateURL);
+  APIrequest.send();
+
+  APIrequest.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      apiResp = JSON.parse(APIrequest.response);
+    } else if (this.readyState === 4 && this.status === 404) {
+     // console.log("user not found");
+    }
+  }
+
+
   let data = JSON.stringify({
     // id : 232323,
     from: "m@yahoo",
@@ -114,6 +132,18 @@ function getMessage(theMsg, autor) {
   messages.appendChild(item);
   var actualMsg = document.createElement('p');
   item.appendChild(actualMsg);
+
+  var APIrequest = new XMLHttpRequest();
+  const translateURL = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyDNjh1TCpYFSjP-LIt7qVkNhKDD3v5m3gs&q=${theMsg}&target=${language}`
+  APIrequest.open("GET", translateURL);
+  APIrequest.send();
+
+  APIrequest.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      apiResp = JSON.parse(APIrequest.response);
+      //aici sa luam mesajul
+    } 
+  }
   actualMsg.textContent = theMsg;
   window.scrollTo(0, Number.MAX_VALUE);
 
